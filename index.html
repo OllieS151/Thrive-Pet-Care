@@ -306,6 +306,7 @@
 
     /* ── ABOUT ──────────────────────────────────────── */
     .about { background:var(--cream-mid);position:relative;overflow:hidden; }
+    .about__map-bg { position:absolute;bottom:0;left:0;right:0;height:62%;pointer-events:none;user-select:none;color:var(--taupe-dark);opacity:.085;-webkit-mask-image:linear-gradient(to bottom,transparent 0%,black 42%);mask-image:linear-gradient(to bottom,transparent 0%,black 42%); }
     .about::before { content:'\201C';position:absolute;top:-4rem;left:clamp(1rem,5vw,4rem);font-family:var(--display);font-size:clamp(16rem,28vw,28rem);color:rgba(201,185,154,.08);line-height:1;pointer-events:none;z-index:0;user-select:none; }
 
     .about__pull { text-align:center;max-width:860px;margin:0 auto 2.5rem;position:relative;z-index:1; }
@@ -839,6 +840,112 @@
         <div class="about__value reveal" style="transition-delay:.24s"><div class="about__value-num">All</div><div class="about__value-label">Animals<br>welcome</div></div>
       </div>
     </div>
+
+    <!-- Caerphilly road map watermark -->
+    <svg class="about__map-bg" viewBox="0 0 960 380" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" aria-hidden="true" preserveAspectRatio="xMidYMax slice">
+      <!-- Castle Caerphilly — outer moat, walls, inner ward, keep -->
+      <rect x="336" y="56" width="172" height="134" rx="3" stroke-width="1" stroke-dasharray="5 3"/>
+      <rect x="350" y="68" width="144" height="110" rx="2" stroke-width="1.8"/>
+      <rect x="374" y="86" width="96" height="74" rx="1" stroke-width="1.3"/>
+      <rect x="398" y="100" width="48" height="46" rx="1" stroke-width="1.8"/>
+      <!-- Water channels E/W of castle -->
+      <path d="M494 84 L548 80 L570 78" stroke-width="1" stroke-dasharray="4 3"/>
+      <path d="M350 88 L300 85 L272 83" stroke-width="1" stroke-dasharray="4 3"/>
+
+      <!-- PRIMARY ROADS -->
+      <!-- Cardiff Road A469 (N-S artery) -->
+      <path d="M504 0 L501 45 L498 90 L496 132 C494 172 492 215 490 255 L488 315 L486 380" stroke-width="2.8"/>
+      <!-- A468 (E-W, north of castle) -->
+      <path d="M0 80 L90 78 L180 76 L270 74 L336 72" stroke-width="2.4"/>
+      <path d="M494 68 L570 66 L670 63 L775 60 L880 57 L960 55" stroke-width="2.4"/>
+      <!-- Van Road / Bedwas Road NE -->
+      <path d="M496 132 C520 108 548 84 574 60 L596 38 L614 16 L626 0" stroke-width="1.9"/>
+      <!-- Mountain Road NW -->
+      <path d="M336 72 L314 50 L292 26 L276 6 L268 0" stroke-width="1.7"/>
+      <!-- Caerphilly Road south -->
+      <path d="M490 255 C478 278 464 298 448 314 L432 328 L415 345 L400 362 L390 380" stroke-width="1.9"/>
+      <!-- Nantgarw Road S branch -->
+      <path d="M390 380 L378 358 L364 330 L350 300 L338 268 L328 235 L320 200 L316 168 L318 138 L322 120" stroke-width="1.2"/>
+
+      <!-- SECONDARY ROADS -->
+      <!-- Castle Street E-W through centre -->
+      <path d="M220 130 L272 128 L322 126 L350 124 L380 122 L424 120 L462 120 L496 120" stroke-width="1.4"/>
+      <!-- Station Terrace / Twyn Road -->
+      <path d="M496 170 L436 168 L374 166 L314 168 L254 172 L190 176 L130 180" stroke-width="1.3"/>
+      <!-- Pontygwindy Road E -->
+      <path d="M572 66 L592 94 L604 126 L608 162 L607 202 L602 248 L592 295 L580 340 L568 375 L562 380" stroke-width="1.2"/>
+      <!-- Pengam Road E side -->
+      <path d="M656 62 L660 102 L662 144 L660 186 L656 228 L648 272 L638 316 L626 356 L618 380" stroke-width="1.2"/>
+      <!-- Energlyn / Hendredenny -->
+      <path d="M626 0 L638 30 L648 60 L656 62" stroke-width="1.1"/>
+      <!-- Rudry Road SE -->
+      <path d="M496 178 L542 182 L584 186 L626 192 L660 196" stroke-width="1.1"/>
+      <!-- Heol y Nant W -->
+      <path d="M0 122 L60 120 L120 118 L180 117 L232 117 L272 118 L322 120" stroke-width="1.1"/>
+      <!-- Lon y Llyn mid-W -->
+      <path d="M0 48 L72 46 L144 44 L210 43 L268 42 L292 50" stroke-width="1.1"/>
+      <!-- Cross link W of castle -->
+      <path d="M0 170 L66 169 L132 168 L194 167 L254 166" stroke-width="1"/>
+      <!-- Perpendiculars W -->
+      <path d="M140 44 L138 80 L136 122 L134 170" stroke-width="1"/>
+      <path d="M242 76 L240 122 L238 168 L236 212" stroke-width="0.9"/>
+      <!-- Aber Road branch -->
+      <path d="M130 180 L128 215 L126 250 L124 285 L122 320" stroke-width="0.9"/>
+
+      <!-- MINOR RESIDENTIAL — west -->
+      <path d="M0 28 L72 27 L138 26" stroke-width="0.6"/>
+      <path d="M0 58 L70 57 L136 56" stroke-width="0.6"/>
+      <path d="M0 96 L62 95 L124 94 L186 93" stroke-width="0.6"/>
+      <path d="M0 148 L58 147 L116 146 L178 145 L236 144" stroke-width="0.6"/>
+      <path d="M0 200 L52 199 L106 198 L162 197 L222 196" stroke-width="0.6"/>
+      <path d="M0 232 L56 231 L116 230 L178 229 L238 228" stroke-width="0.6"/>
+      <path d="M0 262 L60 261 L126 260 L192 259" stroke-width="0.6"/>
+      <path d="M0 294 L66 293 L132 292 L196 291" stroke-width="0.6"/>
+      <path d="M0 326 L72 325 L144 324 L216 323 L278 322" stroke-width="0.6"/>
+      <path d="M0 358 L78 357 L160 356 L244 355 L318 354" stroke-width="0.6"/>
+      <path d="M0 380 L82 378 L168 376 L254 374 L332 372" stroke-width="0.6"/>
+      <!-- Perpendiculars W minor -->
+      <path d="M48 0 L47 28 L46 58 L45 96" stroke-width="0.6"/>
+      <path d="M96 0 L95 27 L94 56 L93 94 L92 146" stroke-width="0.6"/>
+      <path d="M168 0 L167 27 L166 56 L165 93 L164 145 L163 198" stroke-width="0.6"/>
+      <path d="M62 96 L61 147 L60 199 L59 231 L58 261 L57 293" stroke-width="0.6"/>
+      <path d="M118 94 L117 146 L116 198 L115 230 L114 260 L113 292 L112 325" stroke-width="0.6"/>
+      <path d="M180 93 L179 145 L178 197 L177 229 L176 259 L175 291 L174 324 L173 356" stroke-width="0.6"/>
+      <path d="M236 144 L235 198 L234 230 L233 262 L232 294 L231 326 L230 358" stroke-width="0.6"/>
+      <path d="M278 168 L277 212 L276 248 L275 282 L274 316 L273 350 L272 374" stroke-width="0.6"/>
+      <!-- Cross links W minor -->
+      <path d="M57 231 L114 230 L177 229" stroke-width="0.6"/>
+      <path d="M58 261 L113 260 L176 259 L232 258" stroke-width="0.6"/>
+      <path d="M57 293 L112 292 L175 291 L231 290" stroke-width="0.6"/>
+      <path d="M122 320 L174 319 L231 318 L274 317" stroke-width="0.6"/>
+      <path d="M173 356 L230 355 L273 354 L318 353" stroke-width="0.6"/>
+
+      <!-- MINOR RESIDENTIAL — east -->
+      <path d="M508 0 L510 44 L512 88" stroke-width="0.6"/>
+      <path d="M528 0 L530 44 L532 88 L534 132" stroke-width="0.6"/>
+      <path d="M548 0 L550 44 L552 66" stroke-width="0.6"/>
+      <path d="M700 0 L702 30 L704 62 L706 102 L707 144 L706 186" stroke-width="0.6"/>
+      <path d="M742 0 L744 30 L746 60 L748 100 L747 142 L745 184 L742 226" stroke-width="0.6"/>
+      <path d="M782 0 L784 30 L786 60 L788 100 L786 142 L783 184 L780 226 L777 270" stroke-width="0.6"/>
+      <path d="M824 0 L826 30 L828 60 L830 98 L828 140 L825 182 L822 224 L818 268 L813 314 L808 356 L804 380" stroke-width="0.6"/>
+      <path d="M866 0 L868 30 L870 60 L872 98 L870 140 L867 182 L863 224 L858 268 L852 314" stroke-width="0.6"/>
+      <path d="M906 0 L908 30 L910 60 L911 98 L909 140 L906 182 L902 224 L897 268 L891 314 L884 356 L878 380" stroke-width="0.6"/>
+      <path d="M944 0 L946 30 L947 60 L948 98 L946 140 L943 182 L939 224 L934 268" stroke-width="0.6"/>
+      <!-- E cross links -->
+      <path d="M572 66 L614 64 L656 62" stroke-width="0.6"/>
+      <path d="M608 162 L648 160 L706 156 L748 153 L786 150 L826 147 L866 144 L906 141 L944 138 L960 136" stroke-width="0.6"/>
+      <path d="M602 248 L638 245 L660 242 L706 238 L748 234 L783 230 L820 226 L858 222 L897 218" stroke-width="0.6"/>
+      <path d="M580 340 L614 336 L640 333 L670 330 L710 326 L750 322 L786 318 L810 315 L840 312" stroke-width="0.6"/>
+      <path d="M562 380 L596 376 L626 372 L660 368 L704 364 L746 360 L782 356 L808 352 L840 348 L874 344 L908 340 L942 336 L960 334" stroke-width="0.6"/>
+      <!-- Organic diagonals E -->
+      <path d="M660 196 L700 192 L742 188 L782 184 L822 180 L864 176 L906 172 L944 168 L960 166" stroke-width="0.6"/>
+      <path d="M648 272 L684 268 L722 264 L762 260 L800 256 L840 252 L875 248" stroke-width="0.6"/>
+      <!-- Castle area connectors -->
+      <path d="M272 120 L316 122 L336 122" stroke-width="0.9"/>
+      <path d="M494 118 L510 118 L528 118" stroke-width="0.9"/>
+      <path d="M338 56 L360 46 L400 40" stroke-width="0.8"/>
+      <path d="M338 190 L360 196 L400 202 L440 206 L480 208 L494 208" stroke-width="0.8"/>
+    </svg>
   </section>
 
   <div class="wave" aria-hidden="true" style="background:var(--cream-mid)"><svg viewBox="0 0 1440 52" preserveAspectRatio="none" height="52"><path d="M0,34 C240,4 600,52 960,18 C1140,2 1320,42 1440,26 L1440,52 L0,52 Z" fill="#F7F2EA"/></svg></div>
