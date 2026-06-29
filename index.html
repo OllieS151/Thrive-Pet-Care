@@ -261,7 +261,7 @@
     @media(max-width:1020px){ .price-grid{grid-template-columns:1fr 1fr;} }
     @media(max-width:580px)  { .price-grid{grid-template-columns:1fr;} }
 
-    .price-card { background:var(--warm-white);border:1px solid var(--cream-dark);border-radius:var(--r-lg);padding:2.75rem 2.25rem 2.25rem;box-shadow:var(--shadow-card);position:relative;overflow:hidden;transition:box-shadow .35s,transform .35s cubic-bezier(.25,.46,.45,.94); }
+    .price-card { background:var(--warm-white);border:1px solid var(--cream-dark);border-radius:var(--r-lg);padding:2.75rem 2.25rem 2.25rem;box-shadow:var(--shadow-card);position:relative;overflow:hidden;transition:box-shadow .35s,transform .35s cubic-bezier(.25,.46,.45,.94);display:flex;flex-direction:column; }
     .price-card:hover { box-shadow:var(--shadow-lift);transform:translateY(-5px); }
     .price-card--featured { border-color:var(--taupe); }
     .price-card--featured::before { content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--taupe),var(--taupe-dark));border-radius:var(--r-lg) var(--r-lg) 0 0; }
@@ -273,7 +273,7 @@
     .price-amt     { font-family:var(--display);font-size:clamp(2.5rem,5vw,3.5rem);font-weight:600;color:var(--brown);line-height:1; }
     .price-unit    { font-size:.78rem;color:var(--brown-lt);font-weight:400;letter-spacing:.05em; }
     .price-divider { height:1px;background:var(--cream-dark);margin-bottom:1.5rem; }
-    .price-features { display:flex;flex-direction:column;margin-bottom:2rem; }
+    .price-features { display:flex;flex-direction:column;margin-bottom:2rem;flex:1; }
     .price-feature  { display:flex;align-items:baseline;gap:.6rem;padding:.55rem 0;border-bottom:1px solid rgba(224,212,192,.5);font-size:.875rem;color:var(--brown-mid);transition:color .2s; }
     .price-feature:last-child { border-bottom:none; }
     .price-feature:hover { color:var(--brown); }
@@ -330,7 +330,7 @@
     /* ── CONTACT ────────────────────────────────────── */
     .contact { background:var(--brown);position:relative;overflow:hidden; }
     /* Decorative logo watermark — positioned via .contact__logo-bg element */
-    .contact__logo-bg { position:absolute;right:-2rem;bottom:-3rem;width:clamp(280px,32vw,480px);opacity:.045;pointer-events:none;user-select:none;color:var(--cream); }
+    .contact__logo-bg { position:absolute;right:-1rem;bottom:2rem;width:clamp(380px,42vw,600px);opacity:.06;pointer-events:none;user-select:none;color:var(--cream); }
     .contact .eyebrow { color:var(--taupe); }
     .contact h2 { color:var(--cream); }
     .contact .sec-head p { color:rgba(247,242,234,.55); }
