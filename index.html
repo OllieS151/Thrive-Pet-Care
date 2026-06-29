@@ -211,25 +211,45 @@
     .carousel__reveal-desc  { font-size:.82rem;line-height:1.65;color:rgba(247,242,234,.75);margin-bottom:.9rem; }
     .carousel__reveal-price { font-size:.72rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--taupe);display:block; }
 
-    /* Premium elongated arrow buttons */
+    /* Morphing circle→pill arrow buttons */
     .carousel__btn {
-      position:absolute;top:50%;transform:translateY(-50%);z-index:20;
-      width:76px;height:36px;
-      border:1px solid rgba(58,42,26,.18);
-      border-radius:2px;
-      background:rgba(247,242,234,.75);
-      backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+      position:absolute;top:50%;z-index:20;
+      width:64px;height:64px;border-radius:50%;
+      border:1.5px solid rgba(58,42,26,.2);
+      background:transparent;
       color:var(--brown-mid);
       display:flex;align-items:center;justify-content:center;
       cursor:pointer;overflow:hidden;
-      transition:background .25s,border-color .28s,color .25s,transform .3s cubic-bezier(.16,1,.3,1);
+      transition:width .32s cubic-bezier(.4,0,.2,1),border-radius .32s cubic-bezier(.4,0,.2,1),border-color .32s,transform .32s cubic-bezier(.4,0,.2,1);
     }
-    .carousel__btn:hover { background:rgba(58,42,26,.06);border-color:rgba(58,42,26,.4);color:var(--brown); }
-    .carousel__btn--prev { left:2.5rem; }
-    .carousel__btn--next { right:2.5rem; }
-    .carousel__btn--prev:hover { transform:translateY(-50%) translateX(-3px); }
-    .carousel__btn--next:hover { transform:translateY(-50%) translateX(3px); }
-    @media(max-width:700px){ .carousel__btn--prev{left:.5rem;} .carousel__btn--next{right:.5rem;} .carousel__btn{width:56px;height:32px;} }
+    /* Interior line that extends on hover */
+    .carousel__btn-line {
+      position:absolute;height:1px;background:currentColor;opacity:.65;
+      width:0;top:50%;transform:translateY(-50%);
+      transition:width .32s cubic-bezier(.4,0,.2,1);
+      pointer-events:none;
+    }
+    /* Chevron icon — centred, slides toward the round end on hover */
+    .carousel__btn svg {
+      position:absolute;left:50%;top:50%;
+      transform:translate(-50%,-50%);
+      transition:transform .32s cubic-bezier(.4,0,.2,1);
+      width:22px;height:22px;flex-shrink:0;
+    }
+    /* Prev: round end on left, expands left via negative translateX */
+    .carousel__btn--prev { left:2.5rem;transform:translateY(-50%); }
+    .carousel__btn--prev:hover { width:120px;border-radius:50px 14px 14px 50px;transform:translate(-56px,-50%);border-color:rgba(58,42,26,.38); }
+    .carousel__btn--prev .carousel__btn-line { right:18px; }
+    .carousel__btn--prev:hover .carousel__btn-line { width:calc(100% - 48px); }
+    .carousel__btn--prev:hover svg { transform:translate(calc(-50% - 22px),-50%); }
+    /* Next: round end on right, right-anchored so expands left naturally */
+    .carousel__btn--next { right:2.5rem;transform:translateY(-50%); }
+    .carousel__btn--next:hover { width:120px;border-radius:14px 50px 50px 14px;border-color:rgba(58,42,26,.38); }
+    .carousel__btn--next .carousel__btn-line { left:18px; }
+    .carousel__btn--next:hover .carousel__btn-line { width:calc(100% - 48px); }
+    .carousel__btn--next:hover svg { transform:translate(calc(-50% + 22px),-50%); }
+    /* Mobile: swipe-only */
+    @media(max-width:700px){ .carousel__btn{display:none;} }
 
     .carousel__dots { display:flex;gap:.45rem;justify-content:center;margin-top:2rem; }
     .carousel__dot  { width:6px;height:6px;border-radius:50%;background:var(--taupe);opacity:.35;border:none;cursor:pointer;padding:0;transition:opacity .3s,width .3s,border-radius .3s; }
@@ -308,36 +328,53 @@
     .about__value-label { font-size:.72rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--brown-lt);line-height:1.4; }
 
     /* ── CONTACT ────────────────────────────────────── */
-    .contact { background:var(--cream); }
+    .contact { background:var(--brown);position:relative;overflow:hidden; }
+    /* Decorative logo watermark — positioned via .contact__logo-bg element */
+    .contact__logo-bg { position:absolute;right:-2rem;bottom:-3rem;width:clamp(280px,32vw,480px);opacity:.045;pointer-events:none;user-select:none;color:var(--cream); }
+    .contact .eyebrow { color:var(--taupe); }
+    .contact h2 { color:var(--cream); }
+    .contact .sec-head p { color:rgba(247,242,234,.55); }
     .contact__grid { display:grid;grid-template-columns:1fr 1.35fr;gap:5rem;align-items:start; }
     @media(max-width:900px){ .contact__grid{grid-template-columns:1fr;gap:3rem;} }
-    .ch-label { font-family:var(--display);font-size:1.1rem;font-weight:500;color:var(--brown);margin-bottom:1.25rem; }
+    .ch-label { font-family:var(--display);font-size:1.1rem;font-weight:500;color:var(--cream);margin-bottom:1.25rem; }
     .channels  { display:flex;flex-direction:column;gap:.875rem; }
-    .channel   { display:flex;align-items:center;gap:.9rem;padding:1.1rem 1.25rem;background:var(--warm-white);border:1px solid var(--cream-dark);border-radius:var(--r-md);transition:border-color .2s,box-shadow .2s,transform .3s cubic-bezier(.25,.46,.45,.94);cursor:pointer; }
-    .channel:hover { border-color:var(--taupe);box-shadow:var(--shadow-card);transform:translateX(5px); }
+    .channel   { display:flex;align-items:center;gap:.9rem;padding:1.1rem 1.25rem;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-md);transition:border-color .2s,background .2s,transform .3s cubic-bezier(.25,.46,.45,.94);cursor:pointer; }
+    .channel:hover { border-color:rgba(201,185,154,.35);background:rgba(255,255,255,.09);transform:translateX(5px); }
     .ch-icon { width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0; }
-    .ch-icon--wa { background:rgba(37,211,102,.1);color:#1aae52; }
-    .ch-icon--em { background:rgba(160,124,91,.1);color:var(--taupe-dark); }
-    .ch-icon--ig { background:rgba(193,53,132,.08);color:#c13584; }
-    .ch-sub { font-size:.67rem;letter-spacing:.1em;text-transform:uppercase;color:var(--brown-lt);margin-bottom:.1rem; }
-    .ch-val { font-size:.92rem;font-weight:500;color:var(--brown); }
+    .ch-icon--wa { background:rgba(37,211,102,.15);color:#4cd981; }
+    .ch-icon--em { background:rgba(201,185,154,.15);color:var(--taupe); }
+    .ch-icon--ig { background:rgba(193,53,132,.15);color:#e05ba0; }
+    .ch-sub { font-size:.67rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(247,242,234,.4);margin-bottom:.1rem; }
+    .ch-val { font-size:.92rem;font-weight:500;color:var(--cream); }
 
     /* ── FORM ───────────────────────────────────────── */
-    .form-card { background:var(--warm-white);border:1px solid var(--cream-dark);border-radius:var(--r-lg);padding:2.75rem;box-shadow:var(--shadow-lift); }
+    .form-card { background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-lg);padding:2.75rem;box-shadow:0 24px 64px rgba(0,0,0,.25); }
     .form-row  { display:grid;grid-template-columns:1fr 1fr;gap:1rem; }
-    @media(max-width:520px){ .form-row{grid-template-columns:1fr;} .form-card{padding:1.5rem 1rem;} .contact__grid{gap:2rem;} }
-    @media(max-width:520px){ .fg input,.fg select,.fg textarea{max-width:100%;} .ch-val{word-break:break-all;} }
+    @media(max-width:520px){
+      .form-row{grid-template-columns:1fr;}
+      .form-card{padding:1.5rem 1rem;}
+      .contact__grid{gap:2rem;}
+      .fg input,.fg select,.fg textarea{max-width:100%;width:100%;}
+      .ch-val{word-break:break-all;}
+      .channel{min-width:0;overflow:hidden;}
+      .contact .wrap{overflow:hidden;}
+    }
     .fg { display:flex;flex-direction:column;gap:.35rem;margin-bottom:1.1rem; }
-    .fg label { font-size:.7rem;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--brown-mid);transition:color .2s; }
-    .fg:focus-within label { color:var(--taupe-dark); }
-    .fg input,.fg select,.fg textarea { padding:.78rem 1rem;border:1.5px solid var(--cream-dark);border-radius:var(--r-sm);background:var(--cream);font-family:var(--body);font-size:.93rem;color:var(--brown);transition:border-color .2s,box-shadow .2s,background .2s;appearance:none;-webkit-appearance:none;cursor:pointer; }
-    .fg input:focus,.fg select:focus,.fg textarea:focus { outline:none;border-color:var(--taupe-dark);box-shadow:0 0 0 3px rgba(160,124,91,.12);background:var(--warm-white); }
+    .fg label { font-size:.7rem;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:rgba(247,242,234,.45);transition:color .2s; }
+    .fg:focus-within label { color:var(--taupe); }
+    .fg input,.fg select,.fg textarea { padding:.78rem 1rem;border:1.5px solid rgba(255,255,255,.1);border-radius:var(--r-sm);background:rgba(255,255,255,.07);font-family:var(--body);font-size:.93rem;color:var(--cream);transition:border-color .2s,box-shadow .2s,background .2s;appearance:none;-webkit-appearance:none;cursor:pointer; }
+    .fg input::placeholder,.fg textarea::placeholder { color:rgba(247,242,234,.25); }
+    .fg input:focus,.fg select:focus,.fg textarea:focus { outline:none;border-color:var(--taupe);box-shadow:0 0 0 3px rgba(201,185,154,.15);background:rgba(255,255,255,.11); }
     .fg textarea { min-height:110px;resize:vertical; }
-    .fg select { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237A5C3E' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .9rem center;padding-right:2.5rem; }
+    .fg select { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C9B99A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .9rem center;padding-right:2.5rem; }
+    .fg select option { background:var(--brown);color:var(--cream); }
     .form-submit { width:100%;justify-content:center;padding:.95rem;font-size:.9rem;letter-spacing:.04em; }
+    /* Submit button on dark background — use taupe instead of brown */
+    .contact .form-submit { background:var(--taupe-dark);color:var(--cream); }
+    .contact .form-submit:hover { background:var(--brown-mid); }
 
     /* ── FOOTER ─────────────────────────────────────── */
-    .footer { background:var(--brown);padding:3rem 0; }
+    .footer { background:var(--brown);padding:3rem 0;border-top:1px solid rgba(255,255,255,.08); }
     .footer__row  { display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem; }
     .footer__logo { font-family:var(--display);font-size:1.5rem;font-weight:600;font-style:italic;color:var(--cream); }
     .footer__links { display:flex;gap:2rem;flex-wrap:wrap; }
@@ -651,18 +688,13 @@
 
       </div>
 
-      <!-- Premium elongated arrow buttons with thin SVG arrows -->
       <button class="carousel__btn carousel__btn--prev" id="carouselPrev" aria-label="Previous service">
-        <svg width="36" height="12" viewBox="0 0 36 12" fill="none" aria-hidden="true">
-          <line x1="35" y1="6" x2="1" y2="6" stroke="currentColor" stroke-width=".9"/>
-          <polyline points="9,1 1,6 9,11" stroke="currentColor" stroke-width=".9" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <span class="carousel__btn-line"></span>
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
       <button class="carousel__btn carousel__btn--next" id="carouselNext" aria-label="Next service">
-        <svg width="36" height="12" viewBox="0 0 36 12" fill="none" aria-hidden="true">
-          <line x1="1" y1="6" x2="35" y2="6" stroke="currentColor" stroke-width=".9"/>
-          <polyline points="27,1 35,6 27,11" stroke="currentColor" stroke-width=".9" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <span class="carousel__btn-line"></span>
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
     </div>
 
@@ -688,7 +720,20 @@
         <p>No hidden fees. Just clear, straightforward pricing for the care your pet deserves.</p>
       </div>
       <div class="price-grid" id="priceGrid">
-        <div class="price-card price-card--featured reveal">
+        <div class="price-card reveal">
+          <h3 class="price-name">Drop-In Visits</h3>
+          <div class="price-display"><span class="price-from">from</span><span class="price-amt">£<span class="price-counter" data-to="10">10</span></span></div>
+          <div class="price-divider"></div>
+          <ul class="price-features" role="list">
+            <li class="price-feature"><span class="price-check">✦</span><span class="price-text">30-minute home visit</span><span class="price-val">£10</span></li>
+            <li class="price-feature"><span class="price-check">✦</span><span class="price-text">1-hour home visit</span><span class="price-val">£15</span></li>
+            <li class="price-feature"><span class="price-check">✦</span><span class="price-text">Feeding &amp; fresh water</span><span class="price-val"></span></li>
+            <li class="price-feature"><span class="price-check">✦</span><span class="price-text">Playtime &amp; cuddles</span><span class="price-val"></span></li>
+            <li class="price-feature"><span class="price-check">✦</span><span class="price-text">Welfare check &amp; update</span><span class="price-val"></span></li>
+          </ul>
+          <a href="#contact" class="price-cta">Book a Visit</a>
+        </div>
+        <div class="price-card price-card--featured reveal" style="transition-delay:.08s">
           <span class="price-popular">Most popular</span>
           <h3 class="price-name">Dog Walking</h3>
           <div class="price-display"><span class="price-from">from</span><span class="price-amt">£<span class="price-counter" data-to="10">10</span></span></div>
@@ -701,19 +746,6 @@
             <li class="price-feature"><span class="price-check">✦</span><span class="price-text">Walk updates &amp; photos</span><span class="price-val"></span></li>
           </ul>
           <a href="#contact" class="price-cta">Book a Walk</a>
-        </div>
-        <div class="price-card reveal" style="transition-delay:.08s">
-          <h3 class="price-name">Drop-In Visits</h3>
-          <div class="price-display"><span class="price-from">from</span><span class="price-amt">£<span class="price-counter" data-to="10">10</span></span></div>
-          <div class="price-divider"></div>
-          <ul class="price-features" role="list">
-            <li class="price-feature"><span class="price-check">✦</span><span class="price-text">30-minute home visit</span><span class="price-val">£10</span></li>
-            <li class="price-feature"><span class="price-check">✦</span><span class="price-text">1-hour home visit</span><span class="price-val">£15</span></li>
-            <li class="price-feature"><span class="price-check">✦</span><span class="price-text">Feeding &amp; fresh water</span><span class="price-val"></span></li>
-            <li class="price-feature"><span class="price-check">✦</span><span class="price-text">Playtime &amp; cuddles</span><span class="price-val"></span></li>
-            <li class="price-feature"><span class="price-check">✦</span><span class="price-text">Welfare check &amp; update</span><span class="price-val"></span></li>
-          </ul>
-          <a href="#contact" class="price-cta">Book a Visit</a>
         </div>
         <div class="price-card reveal" style="transition-delay:.16s">
           <h3 class="price-name">Overnight Stays</h3>
@@ -791,13 +823,30 @@
     </div>
   </section>
 
+  <div class="wave" aria-hidden="true" style="background:var(--cream)"><svg viewBox="0 0 1440 52" preserveAspectRatio="none" height="52"><path d="M0,16 C240,52 600,0 960,28 C1140,42 1320,10 1440,22 L1440,52 L0,52 Z" fill="#3A2A1A"/></svg></div>
+
   <!-- ── CONTACT ─────────────────────────────────────── -->
   <section class="contact" id="contact" aria-labelledby="contact-title">
+    <!-- Watermark logo — decorative only, low opacity -->
+    <svg class="contact__logo-bg" viewBox="0 0 500 340" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" aria-hidden="true">
+      <!-- Toe pads -->
+      <ellipse cx="122" cy="114" rx="24" ry="31" transform="rotate(-20 122 114)" stroke-width="2.2"/>
+      <ellipse cx="178" cy="88"  rx="29" ry="36" transform="rotate(-7 178 88)"  stroke-width="2.2"/>
+      <ellipse cx="234" cy="88"  rx="29" ry="36" transform="rotate(7 234 88)"   stroke-width="2.2"/>
+      <ellipse cx="290" cy="114" rx="24" ry="31" transform="rotate(20 290 114)" stroke-width="2.2"/>
+      <!-- Main pad -->
+      <path d="M206 242 C162 242 128 214 128 182 C128 155 150 143 176 149 C189 152 200 163 206 174 C212 163 223 152 236 149 C262 143 284 155 284 182 C284 214 250 242 206 242 Z" stroke-width="2.2"/>
+      <!-- Wave line -->
+      <path d="M8 188 C55 188 85 168 128 173 C165 178 180 188 206 188 C232 188 247 178 284 173 C327 168 375 188 492 188" stroke-width="2" stroke-linecap="round"/>
+      <!-- Text -->
+      <text x="250" y="306" text-anchor="middle" font-family="Georgia,serif" font-size="26" letter-spacing="10" stroke-width="0.8" fill="currentColor" stroke="none">THRIVE PET CARE</text>
+    </svg>
+
     <div class="wrap">
       <div class="sec-head reveal">
         <span class="eyebrow">Get in Touch</span>
         <h2 id="contact-title">Ready to book?</h2>
-        <p>Send a message or reach us directly on WhatsApp. We usually reply within a few hours.</p>
+        <p>Fill in the form and we'll receive it straight to our inbox, or reach us directly on WhatsApp or email. We usually reply within a few hours.</p>
       </div>
       <div class="contact__grid">
         <div class="reveal reveal--left">
@@ -841,7 +890,7 @@
               </select>
             </div>
             <div class="fg"><label for="f-msg">Tell us about your pet</label><textarea id="f-msg" name="message" placeholder="Name, breed, age, any special requirements…"></textarea></div>
-            <span class="mag" style="display:block"><button type="submit" class="btn btn--dark form-submit">Send Enquiry via WhatsApp</button></span>
+            <span class="mag" style="display:block"><button type="submit" class="btn btn--dark form-submit">Send Enquiry</button></span>
           </form>
         </div>
       </div>
@@ -1358,15 +1407,32 @@ navLinks.querySelectorAll('a').forEach(function(a){a.addEventListener('click',fu
 })();
 
 /* ─────────────────────────────────────────────────────
-   WHATSAPP FORM
+   EMAIL ENQUIRY FORM
 ───────────────────────────────────────────────────── */
 document.getElementById('contactForm').addEventListener('submit',function(e){
   e.preventDefault();
-  var name=document.getElementById('f-name').value.trim()||'a potential customer',phone=document.getElementById('f-phone').value.trim(),email=document.getElementById('f-email').value.trim(),service=document.getElementById('f-service').value||'your services',msg=document.getElementById('f-msg').value.trim();
-  var text='Hello! I found you via your website.\n\nName: '+name;if(phone)text+='\nPhone: '+phone;if(email)text+='\nEmail: '+email;text+='\n\nInterested in: '+service;if(msg)text+='\n\nAbout my pet: '+msg;
-  var btn=this.querySelector('[type=submit]');btn.textContent='Opening WhatsApp…';btn.disabled=true;
-  window.open('https://wa.me/447804033558?text='+encodeURIComponent(text),'_blank');
-  setTimeout(function(){btn.textContent='Send Enquiry via WhatsApp';btn.disabled=false;},2500);
+  var name    = document.getElementById('f-name').value.trim()    || 'Website visitor';
+  var phone   = document.getElementById('f-phone').value.trim();
+  var email   = document.getElementById('f-email').value.trim();
+  var service = document.getElementById('f-service').value        || 'Not specified';
+  var msg     = document.getElementById('f-msg').value.trim();
+
+  var subject = 'Website Enquiry — ' + service;
+  var body    = 'Hi Gabby,\n\nYou have a new enquiry from your website.\n\n'
+              + 'Name: '    + name    + '\n'
+              + (phone ? 'Phone: ' + phone + '\n' : '')
+              + (email ? 'Reply to: ' + email + '\n' : '')
+              + '\nService interested in: ' + service
+              + (msg ? '\n\nAbout their pet:\n' + msg : '')
+              + '\n\n---\nSent via thrivepetcare.co.uk';
+
+  var btn = this.querySelector('[type=submit]');
+  btn.textContent = 'Opening email…';
+  btn.disabled = true;
+  window.location.href = 'mailto:thrivepetcare@hotmail.com'
+    + '?subject=' + encodeURIComponent(subject)
+    + '&body='    + encodeURIComponent(body);
+  setTimeout(function(){ btn.textContent = 'Send Enquiry'; btn.disabled = false; }, 3000);
 });
 </script>
 </body>
