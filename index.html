@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Thrive Pet Care — professional dog walking, drop-in visits, overnight stays and more. Serving Caerphilly and surrounding areas, Wales." />
+  <title>Thrive Pet Care | Dog Walking & Pet Sitting in Caerphilly, Wales</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── TOKENS ─────────────────────────────────────── */
+    :root {
+      --cream:      #F7F2EA;
+      --cream-mid:  #EDE5D6;
+      --cream-dark: #E0D4C0;
+      --taupe:      #C9B99A;
+      --taupe-dark: #A07C5B;
+      --brown-lt:   #9E7D5A;
+      --brown-mid:  #7A5C3E;
+      --brown:      #3A2A1A;
+      --warm-white: #FEFCF8;
+      --display: 'Cormorant Garamond', Georgia, serif;
+      --body:    'DM Sans', system-ui, sans-serif;
+      --shadow-card: 0 2px 20px rgba(58,42,26,.06);
+      --shadow-lift: 0 10px 40px rgba(58,42,26,.14);
+      --r-sm: 8px; --r-md: 16px; --r-lg: 24px;
+      --wrap-max: 1600px;
+    }
+
+    /* ── RESET ──────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body { font-family: var(--body); background: var(--cream); color: var(--brown); line-height: 1.6; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    button { font-family: var(--body); }
+
+    /* ── CUSTOM CURSOR — removed; using standard OS cursor ── */
+    .cur-dot,.cur-ring { display:none!important; }
+
+    /* ── CLICK RIPPLE ───────────────────────────────── */
+    .click-ripple { position:fixed;border-radius:50%;pointer-events:none;z-index:9997;border:1px solid rgba(58,42,26,.35);width:4px;height:4px;transform:translate(-50%,-50%);animation:cripple .65s cubic-bezier(.25,.46,.45,.94) forwards; }
+    .click-ripple-2 { border-color:rgba(58,42,26,.15);animation-duration:.95s;animation-delay:.07s; }
+    @keyframes cripple { to { width:90px;height:90px;opacity:0;border-width:.5px; } }
+
+    /* ── TYPE ───────────────────────────────────────── */
+    h1,h2,h3 { font-family:var(--display);line-height:1.1;color:var(--brown); }
+    h2 { font-size:clamp(2rem,3.5vw,3rem);font-weight:600; }
+    h3 { font-size:clamp(1.2rem,2vw,1.55rem);font-weight:500; }
+    p  { font-size:1rem;line-height:1.78;color:var(--brown-mid); }
+    .eyebrow { display:inline-block;font-size:.7rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--taupe-dark);margin-bottom:.85rem; }
+
+    /* ── LAYOUT ─────────────────────────────────────── */
+    .wrap { max-width:var(--wrap-max);margin:0 auto;padding:0 clamp(1.5rem,4vw,4rem); }
+    section { padding:7rem 0; }
+    .sec-head { margin-bottom:4rem; }
+    .sec-head h2 { margin-bottom:1rem; }
+    .sec-head p  { max-width:640px; }
+
+    /* ── BUTTONS ────────────────────────────────────── */
+    .btn {
+      display:inline-flex;align-items:center;gap:.45rem;
+      padding:.9rem 2.1rem;font-size:.875rem;font-weight:500;letter-spacing:.02em;
+      border:none;border-radius:var(--r-sm);cursor:pointer;
+      position:relative;overflow:hidden;
+      transition:background .28s cubic-bezier(.16,1,.3,1),color .28s,box-shadow .22s;
+    }
+    .btn > *:not(.btn-fill) { position:relative;z-index:1; }
+    .btn svg { position:relative;z-index:1; }
+    .btn:focus-visible { outline:2px solid var(--taupe-dark);outline-offset:3px; }
+    .btn--dark  { background:var(--brown);color:var(--cream); }
+    .btn--dark:hover  { background:var(--brown-mid);box-shadow:0 4px 20px rgba(58,42,26,.2); }
+    .btn--ghost { background:transparent;color:var(--brown);border:1.5px solid var(--taupe); }
+    .btn--ghost:hover { border-color:var(--brown-mid);background:rgba(58,42,26,.04); }
+    .mag { display:inline-block; }
+    .btn-fill { position:absolute;border-radius:50%;pointer-events:none;transform:scale(0);z-index:0; }
+    .btn--dark  .btn-fill { background:rgba(255,255,255,.14); }
+    .btn--ghost .btn-fill { background:rgba(58,42,26,.07); }
+
+    /* ── NAV ────────────────────────────────────────── */
+    .nav { position:fixed;top:0;left:0;right:0;z-index:200;padding:1.1rem clamp(1.5rem,4vw,4rem);transition:background .35s,box-shadow .35s; }
+    .nav.is-scrolled { background:rgba(247,242,234,.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 1px 0 var(--cream-dark); }
+    .nav__inner { max-width:var(--wrap-max);margin:0 auto;display:flex;align-items:center;justify-content:space-between; }
+    .nav__logo  { display:flex;align-items:center;gap:.75rem; }
+    .nav__paw   { width:30px;height:26px;flex-shrink:0;color:var(--brown); }
+    .nav__text  { display:flex;flex-direction:column;line-height:1; }
+    .nav__name  { font-family:var(--display);font-size:1.2rem;font-weight:600;color:var(--brown); }
+    .nav__sub   { font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--brown-lt);margin-top:2px; }
+    .nav__links { display:flex;align-items:center;gap:2.75rem; }
+    .nav__link  { font-size:.875rem;color:var(--brown-mid);transition:color .2s;cursor:pointer; }
+    .nav__link:hover { color:var(--brown); }
+    .nav__burger { display:none;flex-direction:column;gap:5px;padding:4px;border:none;background:none;cursor:pointer; }
+    .nav__burger span { display:block;width:22px;height:1.5px;background:var(--brown);border-radius:2px;transition:transform .3s,opacity .3s; }
+    .nav__burger.is-open span:nth-child(1) { transform:translateY(6.5px) rotate(45deg); }
+    .nav__burger.is-open span:nth-child(2) { opacity:0; }
+    .nav__burger.is-open span:nth-child(3) { transform:translateY(-6.5px) rotate(-45deg); }
+    @media(max-width:860px){
+      .nav__links { display:none; }
+      .nav__burger { display:flex; }
+      .nav__links.is-open { display:flex;flex-direction:column;position:fixed;inset:0;z-index:199;background:var(--cream);align-items:center;justify-content:center;gap:2.5rem; }
+      .nav__links.is-open .nav__link { font-family:var(--display);font-size:2.25rem;font-weight:500; }
+      .nav__links.is-open .btn { font-size:1rem;padding:.9rem 2.5rem; }
+    }
+
+    /* ── HERO ───────────────────────────────────────── */
+    .hero {
+      min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+      position:relative;overflow:hidden;
+      background: radial-gradient(ellipse 90% 75% at 50% 48%, rgba(201,185,154,.1) 0%, transparent 70%), var(--cream);
+    }
+
+    /* Background paths SVG — covers full hero, always animating */
+    #heroBgPaths {
+      position:absolute;inset:0;width:100%;height:100%;
+      pointer-events:none;z-index:0;overflow:hidden;
+    }
+    @keyframes bgPathTrav { from{stroke-dashoffset:0} to{stroke-dashoffset:-1} }
+
+    .hero__content { position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;padding:120px clamp(1.5rem,5vw,5rem) 100px;width:100%; }
+
+    .hero__write-wrap { position:relative;display:inline-block;margin-bottom:1.6rem;padding-right:.1em; }
+    .hero__pen {
+      position:absolute;top:5%;bottom:5%;left:0;width:1.5px;
+      background:linear-gradient(to bottom,transparent 0%,var(--taupe) 20%,var(--brown-mid) 55%,transparent 100%);
+      transform:rotate(-10deg);pointer-events:none;opacity:0;z-index:2;will-change:left,opacity;
+    }
+    .hero__thrive {
+      font-family:var(--display);font-style:italic;font-weight:600;
+      font-size:clamp(4rem,24vw,20rem);
+      color:var(--brown);line-height:1.05;letter-spacing:-.02em;display:block;
+    }
+    .hero__underline { display:block;width:92%;height:22px;margin:.5rem auto 0; }
+
+    .hero__sub     { font-family:var(--body);font-size:clamp(.9rem,2vw,1.2rem);font-weight:300;letter-spacing:.32em;text-transform:uppercase;color:var(--brown-mid);margin-bottom:2.25rem;opacity:0;transform:translateY(10px); }
+    .hero__tagline { font-size:clamp(1rem,1.6vw,1.15rem);font-weight:300;color:var(--brown-mid);line-height:1.75;max-width:520px;margin-bottom:2.5rem;opacity:0;transform:translateY(10px); }
+    .hero__cta     { display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap;justify-content:center;margin-bottom:2.25rem;opacity:0;transform:translateY(10px); }
+    .hero__cta-link { font-size:.83rem;font-weight:500;letter-spacing:.04em;color:var(--brown-mid);display:inline-flex;align-items:center;gap:.4rem;transition:color .2s,gap .2s;cursor:pointer; }
+    .hero__cta-link:hover { color:var(--brown);gap:.65rem; }
+    .hero__loc { display:inline-flex;align-items:center;gap:.5rem;font-size:.7rem;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--brown-lt);opacity:0; }
+    .hero__scroll { position:absolute;bottom:2.25rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;opacity:0;pointer-events:none;z-index:1; }
+    .hero__scroll-line { width:1px;height:36px;background:linear-gradient(to bottom,transparent,var(--taupe));animation:scroll-pulse 2.2s ease-in-out infinite; }
+    @keyframes scroll-pulse { 0%,100%{opacity:.4;} 50%{opacity:.9;} }
+    .hero__scroll-label { font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--brown-lt); }
+    @media(max-width:600px){ .hero__content{padding:100px 1.5rem 90px;} .hero__cta{flex-direction:column;align-items:center;} }
+    @media(prefers-reduced-motion:reduce){
+      .hero__thrive { clip-path:none!important; }
+      .hero__pen    { display:none!important; }
+      .hero__sub,.hero__tagline,.hero__cta,.hero__loc,.hero__scroll { opacity:1!important;transform:none!important;transition:none!important; }
+      .hero__uline-path { stroke-dashoffset:0!important; }
+    }
+
+    /* ── TRUST ──────────────────────────────────────── */
+    .trust { background:var(--brown);padding:1.75rem 0; }
+    .trust__row  { display:flex;align-items:center;justify-content:center;gap:3rem;flex-wrap:wrap; }
+    .trust__item { display:flex;align-items:center;gap:.75rem; }
+    .trust__icon { width:28px;height:28px;flex-shrink:0; }
+    .trust__label { font-size:.76rem;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--cream-mid); }
+    .trust__sep { width:1px;height:22px;background:rgba(247,242,234,.16);flex-shrink:0; }
+    @media(max-width:640px){ .trust__sep{display:none;} .trust__row{gap:1.75rem;} }
+
+    /* ── WAVE ───────────────────────────────────────── */
+    .wave { display:block;width:100%;overflow:hidden;line-height:0; }
+    .wave svg { display:block;width:100%; }
+
+    /* ── SERVICES ───────────────────────────────────── */
+    .services { background:var(--cream-mid);position:relative;overflow:hidden; }
+    .deco-corner { position:absolute;pointer-events:none; }
+    .deco-corner--tl { top:2rem;left:2rem; }
+    .deco-corner--br { bottom:2rem;right:2rem;transform:rotate(180deg); }
+
+    /* Full-bleed carousel */
+    .carousel {
+      width:100vw;position:relative;
+      left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;
+      height:580px;display:flex;align-items:center;justify-content:center;
+      margin-top:3rem;
+    }
+    @media(max-width:700px){ .carousel{height:440px;} }
+
+    .carousel__track {
+      position:relative;width:100%;height:100%;
+      display:flex;align-items:center;justify-content:center;
+      perspective:1200px;
+    }
+
+    .carousel__item {
+      position:absolute;width:380px;height:540px;
+      transition:transform .6s cubic-bezier(.25,.46,.45,.94),opacity .6s ease,filter .5s ease;
+      transform-style:preserve-3d;cursor:pointer;will-change:transform;
+    }
+    @media(max-width:700px){ .carousel__item{width:260px;height:390px;} }
+
+    .carousel__card { width:100%;height:100%;border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-lift);position:relative; }
+    .carousel__img  { width:100%;height:100%;object-fit:cover;transition:transform .55s ease;display:block; }
+    .carousel__card:hover .carousel__img { transform:scale(1.06); }
+
+    /* Hover reveal */
+    .carousel__reveal {
+      position:absolute;inset:auto 1rem 1rem;
+      background:rgba(26,18,10,.78);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+      border-radius:var(--r-md);padding:1.5rem 1.6rem 1.6rem;
+      transform:translateY(110%);opacity:0;
+      transition:transform .48s cubic-bezier(.16,1,.3,1),opacity .35s ease;
+      pointer-events:none;
+    }
+    .carousel__card:hover .carousel__reveal { transform:translateY(0);opacity:1;pointer-events:auto; }
+    .carousel__reveal-tags { display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.85rem; }
+    .carousel__tag { font-size:.62rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:.22rem .65rem;border-radius:20px;border:1px solid rgba(201,185,154,.35);color:rgba(247,242,234,.8); }
+    .carousel__reveal-name  { font-family:var(--display);font-size:1.6rem;font-weight:500;color:var(--cream);line-height:1.1;margin-bottom:.55rem; }
+    .carousel__reveal-desc  { font-size:.82rem;line-height:1.65;color:rgba(247,242,234,.75);margin-bottom:.9rem; }
+    .carousel__reveal-price { font-size:.72rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--taupe);display:block; }
+
+    /* Premium elongated arrow buttons */
+    .carousel__btn {
+      position:absolute;top:50%;transform:translateY(-50%);z-index:20;
+      width:76px;height:36px;
+      border:1px solid rgba(58,42,26,.18);
+      border-radius:2px;
+      background:rgba(247,242,234,.75);
+      backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+      color:var(--brown-mid);
+      display:flex;align-items:center;justify-content:center;
+      cursor:pointer;overflow:hidden;
+      transition:background .25s,border-color .28s,color .25s,transform .3s cubic-bezier(.16,1,.3,1);
+    }
+    .carousel__btn:hover { background:rgba(58,42,26,.06);border-color:rgba(58,42,26,.4);color:var(--brown); }
+    .carousel__btn--prev { left:2.5rem; }
+    .carousel__btn--next { right:2.5rem; }
+    .carousel__btn--prev:hover { transform:translateY(-50%) translateX(-3px); }
+    .carousel__btn--next:hover { transform:translateY(-50%) translateX(3px); }
+    @media(max-width:700px){ .carousel__btn--prev{left:.5rem;} .carousel__btn--next{right:.5rem;} .carousel__btn{width:56px;height:32px;} }
+
+    .carousel__dots { display:flex;gap:.45rem;justify-content:center;margin-top:2rem; }
+    .carousel__dot  { width:6px;height:6px;border-radius:50%;background:var(--taupe);opacity:.35;border:none;cursor:pointer;padding:0;transition:opacity .3s,width .3s,border-radius .3s; }
+    .carousel__dot.active { opacity:1;width:20px;border-radius:3px; }
+
+    /* ── PRICING ────────────────────────────────────── */
+    .pricing { background:var(--cream);position:relative; }
+    .price-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-bottom:2rem; }
+    @media(max-width:1020px){ .price-grid{grid-template-columns:1fr 1fr;} }
+    @media(max-width:580px)  { .price-grid{grid-template-columns:1fr;} }
+
+    .price-card { background:var(--warm-white);border:1px solid var(--cream-dark);border-radius:var(--r-lg);padding:2.75rem 2.25rem 2.25rem;box-shadow:var(--shadow-card);position:relative;overflow:hidden;transition:box-shadow .35s,transform .35s cubic-bezier(.25,.46,.45,.94); }
+    .price-card:hover { box-shadow:var(--shadow-lift);transform:translateY(-5px); }
+    .price-card--featured { border-color:var(--taupe); }
+    .price-card--featured::before { content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--taupe),var(--taupe-dark));border-radius:var(--r-lg) var(--r-lg) 0 0; }
+
+    .price-popular { display:inline-block;font-size:.65rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--taupe-dark);border:1px solid var(--taupe);padding:.22rem .7rem;border-radius:20px;margin-bottom:.85rem; }
+    .price-name    { font-family:var(--display);font-size:clamp(1.4rem,2.5vw,1.75rem);font-weight:500;color:var(--brown);margin-bottom:1.1rem;line-height:1.1; }
+    .price-display { display:flex;align-items:baseline;gap:.35rem;margin-bottom:1.75rem; }
+    .price-from    { font-size:.72rem;font-weight:400;color:var(--brown-lt);letter-spacing:.05em;text-transform:uppercase; }
+    .price-amt     { font-family:var(--display);font-size:clamp(2.5rem,5vw,3.5rem);font-weight:600;color:var(--brown);line-height:1; }
+    .price-unit    { font-size:.78rem;color:var(--brown-lt);font-weight:400;letter-spacing:.05em; }
+    .price-divider { height:1px;background:var(--cream-dark);margin-bottom:1.5rem; }
+    .price-features { display:flex;flex-direction:column;margin-bottom:2rem; }
+    .price-feature  { display:flex;align-items:baseline;gap:.6rem;padding:.55rem 0;border-bottom:1px solid rgba(224,212,192,.5);font-size:.875rem;color:var(--brown-mid);transition:color .2s; }
+    .price-feature:last-child { border-bottom:none; }
+    .price-feature:hover { color:var(--brown); }
+    .price-check   { color:var(--taupe-dark);font-size:.75rem;flex-shrink:0; }
+    .price-text    { flex:1; }
+    .price-val     { color:var(--brown);font-weight:500;font-family:var(--display);font-size:1rem;white-space:nowrap;margin-left:auto;padding-left:.5rem; }
+    .price-counter { display:inline; }
+
+    .price-cta {
+      display:block;width:100%;padding:.9rem;
+      font-family:var(--body);font-size:.84rem;font-weight:500;letter-spacing:.04em;
+      text-align:center;border-radius:var(--r-sm);
+      border:1.5px solid var(--cream-dark);background:var(--cream);color:var(--brown);
+      cursor:pointer;position:relative;overflow:hidden;
+      transition:background .28s cubic-bezier(.16,1,.3,1),border-color .28s,color .28s,box-shadow .22s;
+    }
+    .price-cta > *:not(.btn-fill) { position:relative;z-index:1; }
+    .price-cta:hover { background:var(--taupe);border-color:var(--taupe);color:var(--warm-white);box-shadow:0 4px 16px rgba(160,124,91,.25); }
+    .price-cta .btn-fill { background:rgba(201,185,154,.4); }
+    .price-card--featured .price-cta { background:var(--taupe-dark);border-color:var(--taupe-dark);color:var(--warm-white); }
+    .price-card--featured .price-cta:hover { background:var(--brown-mid);border-color:var(--brown-mid); }
+    .price-card--featured .price-cta .btn-fill { background:rgba(255,255,255,.12); }
+
+    .price-others { background:var(--cream-mid);border-radius:var(--r-lg);padding:2rem 2.5rem;border:1px solid var(--cream-dark); }
+    .price-others__title { font-family:var(--display);font-size:1.2rem;font-weight:500;color:var(--brown);margin-bottom:1.25rem; }
+    .price-others__grid  { display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.5rem; }
+    .price-other-item { display:flex;justify-content:space-between;align-items:baseline;padding:.65rem .9rem;background:var(--warm-white);border-radius:var(--r-sm);border:1px solid var(--cream-dark);font-size:.86rem;color:var(--brown-mid);transition:background .2s,color .2s; }
+    .price-other-item:hover { background:var(--cream);color:var(--brown); }
+    .price-other-val { color:var(--taupe-dark);font-weight:500;font-family:var(--display);font-size:1rem; }
+
+    /* ── ABOUT ──────────────────────────────────────── */
+    .about { background:var(--cream-mid);position:relative;overflow:hidden; }
+    .about::before { content:'\201C';position:absolute;top:-4rem;left:clamp(1rem,5vw,4rem);font-family:var(--display);font-size:clamp(16rem,28vw,28rem);color:rgba(201,185,154,.08);line-height:1;pointer-events:none;z-index:0;user-select:none; }
+
+    .about__pull { text-align:center;max-width:860px;margin:0 auto 2.5rem;position:relative;z-index:1; }
+    .about__pull-q { font-family:var(--display);font-style:italic;font-size:clamp(1.8rem,4.5vw,3.6rem);font-weight:300;color:var(--brown);line-height:1.2;letter-spacing:-.01em; }
+    .about__pull-q em { font-style:normal;color:var(--taupe-dark); }
+    .about__rule { display:block;width:60px;height:1px;background:linear-gradient(to right,transparent,var(--taupe),transparent);margin:0 auto 3.25rem; }
+
+    .about__inner { max-width:780px;margin:0 auto;text-align:center;position:relative;z-index:1; }
+    .about__inner h2 { margin-bottom:1.5rem; }
+    .about__inner p + p { margin-top:1.1rem; }
+    .about__deco { width:48px;height:1px;background:var(--taupe);margin:2.25rem auto;display:block; }
+    .about__more { display:inline-flex;align-items:center;gap:.5rem;font-size:.78rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--taupe-dark);margin-top:2.25rem;transition:gap .2s;cursor:pointer; }
+    .about__more:hover { gap:.85rem; }
+
+    .about__values { display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:720px;margin:4.5rem auto 0;position:relative;z-index:1; }
+    @media(max-width:640px){ .about__values{grid-template-columns:1fr;max-width:280px;} }
+    .about__value { text-align:center;padding:2.25rem 1.5rem 2rem;border:1px solid var(--cream-dark);border-radius:var(--r-lg);background:rgba(254,252,248,.55);backdrop-filter:blur(4px);transition:transform .35s cubic-bezier(.25,.46,.45,.94),box-shadow .35s; }
+    .about__value:hover { transform:translateY(-4px);box-shadow:var(--shadow-card); }
+    .about__value-num   { font-family:var(--display);font-size:clamp(2.2rem,5vw,3.6rem);font-weight:600;color:var(--brown);line-height:1;margin-bottom:.55rem;letter-spacing:-.02em; }
+    .about__value-label { font-size:.72rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--brown-lt);line-height:1.4; }
+
+    /* ── CONTACT ────────────────────────────────────── */
+    .contact { background:var(--cream); }
+    .contact__grid { display:grid;grid-template-columns:1fr 1.35fr;gap:5rem;align-items:start; }
+    @media(max-width:900px){ .contact__grid{grid-template-columns:1fr;gap:3rem;} }
+    .ch-label { font-family:var(--display);font-size:1.1rem;font-weight:500;color:var(--brown);margin-bottom:1.25rem; }
+    .channels  { display:flex;flex-direction:column;gap:.875rem; }
+    .channel   { display:flex;align-items:center;gap:.9rem;padding:1.1rem 1.25rem;background:var(--warm-white);border:1px solid var(--cream-dark);border-radius:var(--r-md);transition:border-color .2s,box-shadow .2s,transform .3s cubic-bezier(.25,.46,.45,.94);cursor:pointer; }
+    .channel:hover { border-color:var(--taupe);box-shadow:var(--shadow-card);transform:translateX(5px); }
+    .ch-icon { width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0; }
+    .ch-icon--wa { background:rgba(37,211,102,.1);color:#1aae52; }
+    .ch-icon--em { background:rgba(160,124,91,.1);color:var(--taupe-dark); }
+    .ch-icon--ig { background:rgba(193,53,132,.08);color:#c13584; }
+    .ch-sub { font-size:.67rem;letter-spacing:.1em;text-transform:uppercase;color:var(--brown-lt);margin-bottom:.1rem; }
+    .ch-val { font-size:.92rem;font-weight:500;color:var(--brown); }
+
+    /* ── FORM ───────────────────────────────────────── */
+    .form-card { background:var(--warm-white);border:1px solid var(--cream-dark);border-radius:var(--r-lg);padding:2.75rem;box-shadow:var(--shadow-lift); }
+    .form-row  { display:grid;grid-template-columns:1fr 1fr;gap:1rem; }
+    @media(max-width:520px){ .form-row{grid-template-columns:1fr;} .form-card{padding:1.5rem 1rem;} .contact__grid{gap:2rem;} }
+    @media(max-width:520px){ .fg input,.fg select,.fg textarea{max-width:100%;} .ch-val{word-break:break-all;} }
+    .fg { display:flex;flex-direction:column;gap:.35rem;margin-bottom:1.1rem; }
+    .fg label { font-size:.7rem;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--brown-mid);transition:color .2s; }
+    .fg:focus-within label { color:var(--taupe-dark); }
+    .fg input,.fg select,.fg textarea { padding:.78rem 1rem;border:1.5px solid var(--cream-dark);border-radius:var(--r-sm);background:var(--cream);font-family:var(--body);font-size:.93rem;color:var(--brown);transition:border-color .2s,box-shadow .2s,background .2s;appearance:none;-webkit-appearance:none;cursor:pointer; }
+    .fg input:focus,.fg select:focus,.fg textarea:focus { outline:none;border-color:var(--taupe-dark);box-shadow:0 0 0 3px rgba(160,124,91,.12);background:var(--warm-white); }
+    .fg textarea { min-height:110px;resize:vertical; }
+    .fg select { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237A5C3E' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .9rem center;padding-right:2.5rem; }
+    .form-submit { width:100%;justify-content:center;padding:.95rem;font-size:.9rem;letter-spacing:.04em; }
+
+    /* ── FOOTER ─────────────────────────────────────── */
+    .footer { background:var(--brown);padding:3rem 0; }
+    .footer__row  { display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem; }
+    .footer__logo { font-family:var(--display);font-size:1.5rem;font-weight:600;font-style:italic;color:var(--cream); }
+    .footer__links { display:flex;gap:2rem;flex-wrap:wrap; }
+    .footer__link  { font-size:.8rem;color:var(--cream-mid);opacity:.6;transition:opacity .2s;cursor:pointer; }
+    .footer__link:hover { opacity:1; }
+    .footer__copy  { font-size:.73rem;color:var(--cream-mid);opacity:.4; }
+    @media(max-width:640px){ .footer__row{flex-direction:column;align-items:flex-start;} }
+
+    /* ── GALLERY ────────────────────────────────────── */
+    .gallery { background:var(--cream);position:relative;overflow:hidden;padding-bottom:5rem; }
+    .gallery .sec-head { text-align:center; }
+    .gallery .sec-head p { margin:0 auto; }
+
+    .fan-stage {
+      position:relative;height:500px;
+      display:flex;align-items:center;justify-content:center;
+      margin:3rem 0 1.5rem;overflow:visible;
+    }
+    @media(max-width:900px){ .fan-stage{height:380px;} }
+    @media(max-width:600px){ .fan-stage{height:280px;margin:2rem 0 1rem;} }
+    @media(max-width:380px){ .fan-stage{height:220px;} }
+
+    .fan-card {
+      position:absolute;
+      width:200px;height:290px;
+      border-radius:var(--r-md);overflow:hidden;
+      box-shadow:0 14px 48px rgba(58,42,26,.22),0 2px 8px rgba(58,42,26,.10);
+      will-change:transform;opacity:0;
+      transition:transform .55s cubic-bezier(.16,1,.3,1),opacity .4s ease,box-shadow .3s;
+      cursor:pointer;backface-visibility:hidden;
+    }
+    .fan-card:hover { box-shadow:0 22px 60px rgba(58,42,26,.28),0 4px 12px rgba(58,42,26,.14); }
+    @media(max-width:900px){ .fan-card{width:150px;height:215px;} }
+    @media(max-width:600px){ .fan-card{width:108px;height:156px;} }
+    @media(max-width:380px){ .fan-card{width:85px;height:122px;} }
+
+    .fan-card img {
+      width:100%;height:100%;object-fit:cover;display:block;
+      pointer-events:none;user-select:none;
+      transition:transform .5s ease;
+    }
+    .fan-card:hover img { transform:scale(1.05); }
+
+    .fan-controls {
+      display:flex;align-items:center;justify-content:center;
+      gap:1.5rem;position:relative;z-index:20;margin-top:1rem;
+    }
+    .fan-btn {
+      width:46px;height:46px;border-radius:50%;
+      border:1.5px solid rgba(58,42,26,.14);
+      background:rgba(247,242,234,.85);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+      display:flex;align-items:center;justify-content:center;
+      cursor:pointer;color:var(--brown-mid);
+      box-shadow:0 2px 14px rgba(58,42,26,.08);
+      transition:background .25s,border-color .25s,color .25s,transform .2s;
+    }
+    .fan-btn:hover { background:var(--cream-mid);border-color:var(--taupe);color:var(--brown);transform:scale(1.08); }
+    .fan-dots { display:flex;gap:.45rem;align-items:center; }
+    .fan-dot  { width:5px;height:5px;border-radius:50%;background:var(--taupe);opacity:.3;border:none;padding:0;cursor:pointer;transition:opacity .3s,width .3s,border-radius .3s; }
+    .fan-dot.active { opacity:1;width:18px;border-radius:3px; }
+
+    /* ── SCROLL REVEAL ──────────────────────────────── */
+    .reveal { opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.25,.46,.45,.94),transform .7s cubic-bezier(.25,.46,.45,.94); }
+    .reveal.in { opacity:1;transform:none; }
+    .reveal--left  { transform:translateX(-22px); }
+    .reveal--left.in  { transform:none; }
+    .reveal--right { transform:translateX(22px); }
+    .reveal--right.in { transform:none; }
+
+    /* ── MOBILE & PERFORMANCE ───────────────────────── */
+
+    /* Kill bg paths on mobile — 72 animated SVGs are GPU-heavy */
+    @media(max-width:767px){ #heroBgPaths{display:none;} }
+
+    /* Tighter vertical rhythm on small screens */
+    @media(max-width:640px){ section{padding:5rem 0;} }
+    @media(max-width:480px){ section{padding:4rem 0;} .sec-head{margin-bottom:2rem;} }
+
+    /* Hero: less top padding on mobile, hide pen (too small to read) */
+    @media(max-width:600px){ .hero__pen{display:none;} }
+
+    /* Carousel: on touch devices, always partially show reveal overlay
+       so users know there's content — tap the centre card to open fully */
+    @media(hover:none){
+      .carousel__reveal{
+        transform:translateY(72%)!important;opacity:1!important;
+        backdrop-filter:none;-webkit-backdrop-filter:none;
+        border-radius:0 0 var(--r-lg) var(--r-lg);
+        transition:transform .38s cubic-bezier(.16,1,.3,1),opacity .25s;
+      }
+      .carousel__reveal.is-open{ transform:translateY(0)!important; }
+      .carousel__reveal-desc{ display:none; }
+      .carousel__reveal-tags{ margin-bottom:.5rem; }
+    }
+
+    /* Carousel: swipe-only on mobile — arrows hidden */
+    @media(max-width:700px){ .carousel__btn{display:none;} }
+
+    /* About: scale down decorative quote on mobile */
+    @media(max-width:600px){ .about::before{font-size:8rem;top:-0.5rem;} }
+
+    /* Pricing "other" grid: single column on mobile */
+    @media(max-width:480px){ .price-others__grid{grid-template-columns:1fr;} }
+
+    /* Ensure all interactive controls have 44px minimum tap area */
+    .fan-btn,.carousel__btn,.nav__burger{min-width:44px;min-height:44px;}
+    /* Fan dots: small visual, but .fan-controls row is min 44px tall for easy tapping */
+    .fan-controls { min-height:44px; }
+    /* Tighter gap on mobile so arrows don't overflow */
+    @media(max-width:480px){ .fan-controls{gap:.75rem;} }
+
+    /* GPU compositing hints — only where animation is continuous */
+    .carousel__item { will-change:transform; }
+    .hero__thrive   { -webkit-font-smoothing:antialiased;text-rendering:geometricPrecision; }
+
+    /* Eliminate 300ms tap delay on mobile */
+    a, button, .carousel__item, .fan-card, .channel, .price-card {
+      touch-action: manipulation;
+    }
+
+    /* Disable expensive blur filter on mobile carousel */
+    @media(max-width:700px){
+      .carousel__item { filter:none!important; }
+    }
+
+    /* Reduce transition cost on low-power devices */
+    @media(prefers-reduced-motion:reduce){
+      .fan-card,.carousel__item,.channel,.price-card,.about__value { transition:none!important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ─────────────────────────────────────────── -->
+<header>
+  <nav class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="#home" class="nav__logo">
+        <svg class="nav__paw" viewBox="0 0 44 36" fill="none" aria-hidden="true">
+          <circle cx="8"  cy="15" r="3.2" stroke="currentColor" stroke-width="1.4" fill="none"/>
+          <circle cx="16" cy="8"  r="3.8" stroke="currentColor" stroke-width="1.4" fill="none"/>
+          <circle cx="28" cy="8"  r="3.8" stroke="currentColor" stroke-width="1.4" fill="none"/>
+          <circle cx="36" cy="15" r="3.2" stroke="currentColor" stroke-width="1.4" fill="none"/>
+          <ellipse cx="22" cy="26" rx="9" ry="7" stroke="currentColor" stroke-width="1.4" fill="none"/>
+        </svg>
+        <div class="nav__text">
+          <span class="nav__name">Thrive Pet Care</span>
+          <span class="nav__sub">Caerphilly &amp; Surrounding Areas</span>
+        </div>
+      </a>
+      <ul class="nav__links" id="navLinks" role="list">
+        <li><a href="#services" class="nav__link">Services</a></li>
+        <li><a href="#pricing"  class="nav__link">Pricing</a></li>
+        <li><a href="#about"    class="nav__link">About</a></li>
+        <li><a href="#gallery"  class="nav__link">Gallery</a></li>
+        <li><a href="#contact"  class="btn btn--dark" style="font-size:.84rem;padding:.7rem 1.4rem;">Get in Touch</a></li>
+      </ul>
+      <button class="nav__burger" id="burger" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ── HERO ───────────────────────────────────────── -->
+  <section class="hero" id="home" aria-label="Hero">
+    <!-- Animated background paths — SVG diagonals that sweep across the hero -->
+    <svg id="heroBgPaths" aria-hidden="true" viewBox="0 0 696 316" preserveAspectRatio="xMidYMid slice"></svg>
+
+    <div class="hero__content">
+      <div class="hero__write-wrap" id="heroWrap">
+        <h1 class="hero__thrive" id="heroThrive" aria-label="Thrive">Thrive</h1>
+        <div class="hero__pen" id="heroPen" aria-hidden="true"></div>
+        <svg class="hero__underline" viewBox="0 0 500 24" preserveAspectRatio="none" aria-hidden="true">
+          <path id="heroUline" d="M10 16 Q90 5 200 14 Q310 23 410 10 Q450 4 490 14"
+                stroke="var(--taupe)" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <p class="hero__sub"     id="heroSub">Pet Care</p>
+      <p class="hero__tagline" id="heroTagline">Attentive, personalised care for your beloved animals — from solo walks to overnight stays, in the heart of Caerphilly.</p>
+      <div class="hero__cta"   id="heroCta">
+        <span class="mag"><a href="#contact" class="btn btn--dark">Book a Visit</a></span>
+        <a href="#services" class="hero__cta-link">
+          Explore services
+          <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l5 4-5 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+      <p class="hero__loc" id="heroLoc">
+        <svg width="11" height="14" viewBox="0 0 11 14" fill="none" aria-hidden="true"><path d="M5.5 1C2.97 1 1 3 1 5.5c0 3.5 4.5 7.5 4.5 7.5S10 9 10 5.5C10 3 8.03 1 5.5 1z" stroke="currentColor" stroke-width="1.1" fill="none"/><circle cx="5.5" cy="5.5" r="1.6" fill="currentColor"/></svg>
+        Caerphilly &amp; Surrounding Areas · Wales
+      </p>
+    </div>
+    <div class="hero__scroll" id="heroScroll" aria-hidden="true">
+      <span class="hero__scroll-line"></span>
+      <span class="hero__scroll-label">Scroll</span>
+    </div>
+  </section>
+
+  <!-- ── TRUST ───────────────────────────────────────── -->
+  <div class="trust" role="complementary">
+    <div class="wrap">
+      <div class="trust__row">
+        <div class="trust__item">
+          <svg class="trust__icon" viewBox="0 0 32 32" fill="none"><path d="M16 3L4 8.5V15c0 7.5 5.2 14.4 12 16.3C22.8 29.4 28 22.5 28 15V8.5L16 3z" stroke="#C9B99A" stroke-width="1.3" fill="none"/><path d="M11 16l3.5 3.5 7-7" stroke="#C9B99A" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <span class="trust__label">Fully Insured</span>
+        </div>
+        <div class="trust__sep" aria-hidden="true"></div>
+        <div class="trust__item">
+          <svg class="trust__icon" viewBox="0 0 32 32" fill="none"><circle cx="12" cy="12" r="5" stroke="#C9B99A" stroke-width="1.3"/><path d="M7 27c0-3.6 2.2-6 5-6" stroke="#C9B99A" stroke-width="1.3" stroke-linecap="round"/><circle cx="22" cy="12" r="4" stroke="#A07C5B" stroke-width="1.3"/><path d="M19 21c2.2 0 5 2.4 5 6" stroke="#A07C5B" stroke-width="1.3" stroke-linecap="round"/></svg>
+          <span class="trust__label">1:1 Solo Walks</span>
+        </div>
+        <div class="trust__sep" aria-hidden="true"></div>
+        <div class="trust__item">
+          <svg class="trust__icon" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="15" r="11" stroke="#C9B99A" stroke-width="1.3" fill="none"/><path d="M16 9v7l4.5 2.75" stroke="#A07C5B" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <span class="trust__label">Flexible Scheduling</span>
+        </div>
+        <div class="trust__sep" aria-hidden="true"></div>
+        <div class="trust__item">
+          <svg class="trust__icon" viewBox="0 0 32 32" fill="none"><path d="M8 14s0-6 8-6 8 6 8 6v10a2 2 0 01-2 2H10a2 2 0 01-2-2V14z" stroke="#C9B99A" stroke-width="1.3" fill="none"/><path d="M12 22v-5a4 4 0 018 0v5" stroke="#A07C5B" stroke-width="1.3"/></svg>
+          <span class="trust__label">Local &amp; Trusted</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wave" aria-hidden="true"><svg viewBox="0 0 1440 52" preserveAspectRatio="none" height="52"><path d="M0,0 C240,52 480,0 720,26 C960,52 1200,8 1440,26 L1440,52 L0,52 Z" fill="#EDE5D6"/></svg></div>
+
+  <!-- ── SERVICES ─────────────────────────────────────── -->
+  <section class="services" id="services" aria-labelledby="services-title">
+    <svg class="deco-corner deco-corner--tl" width="80" height="80" viewBox="0 0 80 80" fill="none" aria-hidden="true">
+      <path d="M1 79 L1 1 L79 1" stroke="rgba(160,124,91,.22)" stroke-width="1" fill="none"/>
+      <circle cx="1" cy="1" r="3" fill="rgba(160,124,91,.18)"/>
+    </svg>
+    <svg class="deco-corner deco-corner--br" width="80" height="80" viewBox="0 0 80 80" fill="none" aria-hidden="true">
+      <path d="M1 79 L1 1 L79 1" stroke="rgba(160,124,91,.22)" stroke-width="1" fill="none"/>
+      <circle cx="1" cy="1" r="3" fill="rgba(160,124,91,.18)"/>
+    </svg>
+
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">What We Offer</span>
+        <h2 id="services-title">Care built around your pet</h2>
+        <p>Every service is tailored to your animal's needs. Explore each card to discover more.</p>
+      </div>
+    </div>
+
+    <div class="carousel" id="svcCarousel" aria-label="Services">
+      <div class="carousel__track" id="carouselTrack">
+
+        <div class="carousel__item">
+          <div class="carousel__card">
+            <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=800&q=80" alt="Dogs on a walk" class="carousel__img" loading="lazy"/>
+            <div class="carousel__reveal">
+              <div class="carousel__reveal-tags"><span class="carousel__tag">Solo</span><span class="carousel__tag">Daily</span><span class="carousel__tag">All Breeds</span></div>
+              <h3 class="carousel__reveal-name">Dog Walking</h3>
+              <p class="carousel__reveal-desc">Solo 1:1 walks at your dog's own pace with undivided attention, live updates and photos throughout every outing.</p>
+              <span class="carousel__reveal-price">30 min · £10 &nbsp;·&nbsp; 1 hour · £15</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel__item">
+          <div class="carousel__card">
+            <img src="https://images.unsplash.com/photo-1592194996308-7b43878e84a6?auto=format&fit=crop&w=800&q=80" alt="Cat relaxing at home" class="carousel__img" loading="lazy"/>
+            <div class="carousel__reveal">
+              <div class="carousel__reveal-tags"><span class="carousel__tag">Cats</span><span class="carousel__tag">Small Animals</span><span class="carousel__tag">Dogs</span></div>
+              <h3 class="carousel__reveal-name">Drop-In Visits</h3>
+              <p class="carousel__reveal-desc">Home visits to feed, refresh water and spend quality time — ideal for cats and small animals while you're away.</p>
+              <span class="carousel__reveal-price">30 min · £10 &nbsp;·&nbsp; 1 hour · £15</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel__item">
+          <div class="carousel__card">
+            <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=800&q=80" alt="Golden retriever at home" class="carousel__img" loading="lazy"/>
+            <div class="carousel__reveal">
+              <div class="carousel__reveal-tags"><span class="carousel__tag">All Animals</span><span class="carousel__tag">House Secure</span><span class="carousel__tag">Peace of Mind</span></div>
+              <h3 class="carousel__reveal-name">Overnight Stays</h3>
+              <p class="carousel__reveal-desc">Full overnight pet &amp; house sitting — your animals stay comfortable in their own home, your property stays safe.</p>
+              <span class="carousel__reveal-price">From £50 per night</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel__item">
+          <div class="carousel__card">
+            <img src="https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?auto=format&fit=crop&w=800&q=80" alt="Dog being groomed" class="carousel__img" loading="lazy"/>
+            <div class="carousel__reveal">
+              <div class="carousel__reveal-tags"><span class="carousel__tag">Dogs</span><span class="carousel__tag">Low Stress</span><span class="carousel__tag">At Home</span></div>
+              <h3 class="carousel__reveal-name">Grooming &amp; Nail Trims</h3>
+              <p class="carousel__reveal-desc">At-home nail trims and bath &amp; brush-outs to reduce stress — grooming in your pet's own familiar surroundings.</p>
+              <span class="carousel__reveal-price">Nail trim · £7 &nbsp;·&nbsp; Bath POA</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel__item">
+          <div class="carousel__card">
+            <img src="https://images.unsplash.com/photo-1425082661705-1834bfd09dca?auto=format&fit=crop&w=800&q=80" alt="Rabbit in a garden" class="carousel__img" loading="lazy"/>
+            <div class="carousel__reveal">
+              <div class="carousel__reveal-tags"><span class="carousel__tag">Horses</span><span class="carousel__tag">Rabbits</span><span class="carousel__tag">Events</span></div>
+              <h3 class="carousel__reveal-name">Small Animals &amp; More</h3>
+              <p class="carousel__reveal-desc">Horse &amp; small animal care, events chaperoning — no animal too big or small to deserve attentive, expert care.</p>
+              <span class="carousel__reveal-price">POA — get in touch</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Premium elongated arrow buttons with thin SVG arrows -->
+      <button class="carousel__btn carousel__btn--prev" id="carouselPrev" aria-label="Previous service">
+        <svg width="36" height="12" viewBox="0 0 36 12" fill="none" aria-hidden="true">
+          <line x1="35" y1="6" x2="1" y2="6" stroke="currentColor" stroke-width=".9"/>
+          <polyline points="9,1 1,6 9,11" stroke="currentColor" stroke-width=".9" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <button class="carousel__btn carousel__btn--next" id="carouselNext" aria-label="Next service">
+        <svg width="36" height="12" viewBox="0 0 36 12" fill="none" aria-hidden="true">
+          <line x1="1" y1="6" x2="35" y2="6" stroke="currentColor" stroke-width=".9"/>
+          <polyline points="27,1 35,6 27,11" stroke="currentColor" stroke-width=".9" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="wrap">
+      <div class="carousel__dots" role="tablist" aria-label="Service slides">
+        <button class="carousel__dot active" data-index="0" role="tab" aria-label="Dog Walking"></button>
+        <button class="carousel__dot" data-index="1" role="tab" aria-label="Drop-In Visits"></button>
+        <button class="carousel__dot" data-index="2" role="tab" aria-label="Overnight Stays"></button>
+        <button class="carousel__dot" data-index="3" role="tab" aria-label="Grooming"></button>
+        <button class="carousel__dot" data-index="4" role="tab" aria-label="Small Animals"></button>
+      </div>
+    </div>
+  </section>
+
+  <div class="wave" aria-hidden="true" style="background:var(--cream-mid)"><svg viewBox="0 0 1440 52" preserveAspectRatio="none" height="52"><path d="M0,26 C360,0 720,52 1080,26 C1260,12 1380,4 1440,10 L1440,52 L0,52 Z" fill="#F7F2EA"/></svg></div>
+
+  <!-- ── PRICING ─────────────────────────────────────── -->
+  <section class="pricing" id="pricing" aria-labelledby="pricing-title">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Transparent Pricing</span>
+        <h2 id="pricing-title">Simple, honest rates</h2>
+        <p>No hidden fees. Just clear, straightforward pricing for the care your pet deserves.</p>
+      </div>
+      <div class="price-grid" id="priceGrid">
+        <div class="price-card price-card--featured reveal">
+          <span class="price-popular">Most popular</span>
+          <h3 class="price-name">Dog Walking</h3>
+          <div class="price-display"><span class="price-from">from</span><span class="price-amt">£<span class="price-counter" data-to="10">10</span></span></div>
+          <div class="price-divider"></div>
+          <ul class="price-features" role="list">
+            <li class="price-feature"><span class="price-check">✦</span><span class="price-text">30-minute walk</span><span class="price-val">£10</span></li>
+            <li class="price-feature"><span class="price-check">✦</span><span class="price-text">1-hour walk</span><span class="price-val">£15</span></li>
+            <li class="price-feature"><span class="price-check">✦</span><span class="price-text">Extra dog (same house)</span><span class="price-val">+£5</span></li>
+            <li class="price-feature"><span class="price-check">✦</span><span class="price-text">Solo &amp; undivided attention</span><span class="price-val"></span></li>
+            <li class="price-feature"><span class="price-check">✦</span><span class="price-text">Walk updates &amp; photos</span><span class="price-val"></span></li>
+          </ul>
+          <a href="#contact" class="price-cta">Book a Walk</a>
+        </div>
+        <div class="price-card reveal" style="transition-delay:.08s">
+          <h3 class="price-name">Drop-In Visits</h3>
+          <div class="price-display"><span class="price-from">from</span><span class="price-amt">£<span class="price-counter" data-to="10">10</span></span></div>
+          <div class="price-divider"></div>
+          <ul class="price-features" role="list">
+            <li class="price-feature"><span class="price-check">✦</span><span class="price-text">30-minute home visit</span><span class="price-val">£10</span></li>
+            <li class="price-feature"><span class="price-check">✦</span><span class="price-text">1-hour home visit</span><span class="price-val">£15</span></li>
+            <li class="price-feature"><span class="price-check">✦</span><span class="price-text">Feeding &amp; fresh water</span><span class="price-val"></span></li>
+            <li class="price-feature"><span class="price-check">✦</span><span class="price-text">Playtime &amp; cuddles</span><span class="price-val"></span></li>
+            <li class="price-feature"><span class="price-check">✦</span><span class="price-text">Welfare check &amp; update</span><span class="price-val"></span></li>
+          </ul>
+          <a href="#contact" class="price-cta">Book a Visit</a>
+        </div>
+        <div class="price-card reveal" style="transition-delay:.16s">
+          <h3 class="price-name">Overnight Stays</h3>
+          <div class="price-display"><span class="price-from">from</span><span class="price-amt">£<span class="price-counter" data-to="50">50</span></span><span class="price-unit">/ night</span></div>
+          <div class="price-divider"></div>
+          <ul class="price-features" role="list">
+            <li class="price-feature"><span class="price-check">✦</span><span class="price-text">Pet &amp; house sitting</span><span class="price-val">£50/night</span></li>
+            <li class="price-feature"><span class="price-check">✦</span><span class="price-text">Extra dog</span><span class="price-val">+£5/night</span></li>
+            <li class="price-feature"><span class="price-check">✦</span><span class="price-text">Extra cat</span><span class="price-val">+£3/night</span></li>
+            <li class="price-feature"><span class="price-check">✦</span><span class="price-text">All animal types welcome</span><span class="price-val"></span></li>
+            <li class="price-feature"><span class="price-check">✦</span><span class="price-text">Home kept safe &amp; secure</span><span class="price-val"></span></li>
+          </ul>
+          <a href="#contact" class="price-cta">Book a Stay</a>
+        </div>
+      </div>
+      <div class="price-others reveal">
+        <p class="price-others__title">Other Services — get in touch for a quote</p>
+        <div class="price-others__grid">
+          <div class="price-other-item">At-Home Nail Trim <span class="price-other-val">£7</span></div>
+          <div class="price-other-item">Dog Bath &amp; Brush-Out <span class="price-other-val">POA</span></div>
+          <div class="price-other-item">Horse &amp; Small Animal Care <span class="price-other-val">POA</span></div>
+          <div class="price-other-item">Events Chaperone <span class="price-other-val">POA</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wave" aria-hidden="true" style="background:var(--cream)"><svg viewBox="0 0 1440 52" preserveAspectRatio="none" height="52"><path d="M0,10 C180,52 540,0 900,34 C1080,52 1300,18 1440,4 L1440,52 L0,52 Z" fill="#EDE5D6"/></svg></div>
+
+  <!-- ── ABOUT ──────────────────────────────────────── -->
+  <section class="about" id="about" aria-labelledby="about-title">
+    <div class="wrap">
+      <div class="about__pull reveal"><p class="about__pull-q">"Every pet deserves to <em>thrive.</em>"</p></div>
+      <span class="about__rule reveal" aria-hidden="true"></span>
+      <div class="about__inner">
+        <span class="eyebrow reveal">About Thrive Pet Care</span>
+        <h2 id="about-title" class="reveal">Meet Gabby,<br>your local pet carer</h2>
+        <span class="about__deco reveal" aria-hidden="true"></span>
+        <p class="reveal">Hi, my name is Gabby and I am a 20 year old student currently studying Animal Health and Welfare at Harper Adams University.</p>
+        <p class="reveal" style="transition-delay:.08s">I have several years of experience working with dogs, horses and other animals. This experience includes dog walking, pet sitting, stable work and dog grooming. I also own a cat and a dog myself — I am currently on my placement year working at a canine hydrotherapy and physiotherapy centre.</p>
+        <p class="reveal" style="transition-delay:.16s">My dream is to become a veterinary physiotherapist and help animals of all sizes. I am experienced with handling all types of animals and breeds including those who might be extremely energetic, nervous or reactive.</p>
+        <p class="reveal" style="transition-delay:.24s">The degree I am currently pursuing, along with my hands-on experience, provides me with the knowledge and skills to meet the needs of every animal.</p>
+        <a href="#contact" class="about__more reveal" style="transition-delay:.32s">Get in touch to find out more <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l5 4-5 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+      <div class="about__values">
+        <div class="about__value reveal"><div class="about__value-num">1:1</div><div class="about__value-label">Solo walks,<br>every time</div></div>
+        <div class="about__value reveal" style="transition-delay:.12s"><div class="about__value-num">5+</div><div class="about__value-label">Services<br>offered</div></div>
+        <div class="about__value reveal" style="transition-delay:.24s"><div class="about__value-num">All</div><div class="about__value-label">Animals<br>welcome</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wave" aria-hidden="true" style="background:var(--cream-mid)"><svg viewBox="0 0 1440 52" preserveAspectRatio="none" height="52"><path d="M0,34 C240,4 600,52 960,18 C1140,2 1320,42 1440,26 L1440,52 L0,52 Z" fill="#F7F2EA"/></svg></div>
+
+  <!-- ── GALLERY ──────────────────────────────────────── -->
+  <section class="gallery" id="gallery" aria-label="Photo gallery">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Our Clients</span>
+        <h2>Faces We Care For</h2>
+        <p>A few of the wonderful animals we've had the privilege of looking after.</p>
+      </div>
+    </div>
+
+    <div class="fan-stage" id="fanStage" aria-label="Photo fan"></div>
+
+    <div class="fan-controls">
+      <button class="fan-btn" id="fanPrev" aria-label="Previous photo">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="fan-dots" id="fanDots"></div>
+      <button class="fan-btn" id="fanNext" aria-label="Next photo">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- ── CONTACT ─────────────────────────────────────── -->
+  <section class="contact" id="contact" aria-labelledby="contact-title">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Get in Touch</span>
+        <h2 id="contact-title">Ready to book?</h2>
+        <p>Send a message or reach us directly on WhatsApp. We usually reply within a few hours.</p>
+      </div>
+      <div class="contact__grid">
+        <div class="reveal reveal--left">
+          <p class="ch-label">Prefer to reach us directly?</p>
+          <div class="channels">
+            <a href="https://wa.me/447804033558" class="channel" target="_blank" rel="noopener noreferrer">
+              <div class="ch-icon ch-icon--wa"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1C4.13 1 1 4.13 1 8c0 1.27.34 2.46.94 3.5L1 15l3.63-1A6.95 6.95 0 008 14.87C12.87 14.87 15 11.74 15 8c0-3.87-3.13-7-7-7z" stroke="currentColor" stroke-width="1.2"/><path d="M5.5 6.5c.5.87 1.2 1.75 2.1 2.65.9.9 1.8 1.6 2.65 2.1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+              <div><div class="ch-sub">WhatsApp</div><div class="ch-val">+44 78040 33558</div></div>
+            </a>
+            <a href="mailto:thrivepetcare@hotmail.com" class="channel">
+              <div class="ch-icon ch-icon--em"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="10" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M1 4.5l7 4.5 7-4.5" stroke="currentColor" stroke-width="1.2"/></svg></div>
+              <div><div class="ch-sub">Email</div><div class="ch-val">thrivepetcare@hotmail.com</div></div>
+            </a>
+            <a href="https://www.instagram.com/thrivepetcareuk" class="channel" target="_blank" rel="noopener noreferrer">
+              <div class="ch-icon ch-icon--ig"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="4" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.2"/><circle cx="11.5" cy="4.5" r=".9" fill="currentColor"/></svg></div>
+              <div><div class="ch-sub">Instagram</div><div class="ch-val">@thrivepetcareuk</div></div>
+            </a>
+          </div>
+        </div>
+        <div class="form-card reveal reveal--right">
+          <form id="contactForm" novalidate>
+            <div class="form-row">
+              <div class="fg"><label for="f-name">Your name</label><input type="text" id="f-name" name="name" placeholder="Jane Smith" autocomplete="name" required/></div>
+              <div class="fg"><label for="f-phone">Phone / WhatsApp</label><input type="tel" id="f-phone" name="phone" placeholder="+44 7…" autocomplete="tel"/></div>
+            </div>
+            <div class="fg"><label for="f-email">Email address</label><input type="email" id="f-email" name="email" placeholder="you@example.com" autocomplete="email"/></div>
+            <div class="fg">
+              <label for="f-service">Service you're interested in</label>
+              <select id="f-service" name="service">
+                <option value="">Choose a service…</option>
+                <option>Dog Walking — 30 min (£10)</option>
+                <option>Dog Walking — 1 hour (£15)</option>
+                <option>Drop-In Home Visit — 30 min (£10)</option>
+                <option>Drop-In Home Visit — 1 hour (£15)</option>
+                <option>Overnight Stay / House Sitting (from £50)</option>
+                <option>At-Home Nail Trim (£7)</option>
+                <option>Dog Bath &amp; Brush-Out</option>
+                <option>Horse &amp; Small Animal Care</option>
+                <option>Events Chaperone</option>
+                <option>Not sure yet</option>
+              </select>
+            </div>
+            <div class="fg"><label for="f-msg">Tell us about your pet</label><textarea id="f-msg" name="message" placeholder="Name, breed, age, any special requirements…"></textarea></div>
+            <span class="mag" style="display:block"><button type="submit" class="btn btn--dark form-submit">Send Enquiry via WhatsApp</button></span>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__row">
+      <span class="footer__logo">Thrive Pet Care</span>
+      <nav class="footer__links" aria-label="Footer navigation">
+        <a href="#services"  class="footer__link">Services</a>
+        <a href="#pricing"   class="footer__link">Pricing</a>
+        <a href="#about"     class="footer__link">About</a>
+        <a href="#contact"   class="footer__link">Contact</a>
+        <a href="https://www.instagram.com/thrivepetcareuk" class="footer__link" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.facebook.com/profile.php?id=61573861561124" class="footer__link" target="_blank" rel="noopener">Facebook</a>
+      </nav>
+      <p class="footer__copy">© 2025 Thrive Pet Care · Caerphilly, Wales</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+'use strict';
+
+/* ─────────────────────────────────────────────────────
+   BACKGROUND PATHS — SVG diagonal lines sweeping across
+   the hero, inspired by architectural line art.
+   72 paths (36 each direction) generated programmatically,
+   animated purely with CSS stroke-dashoffset.
+───────────────────────────────────────────────────── */
+(function initBgPaths() {
+  /* Skip entirely on mobile — CSS already hides the SVG, but don't
+     burn CPU generating 72 DOM nodes that will never be seen */
+  if (window.innerWidth < 768) return;
+  var svg = document.getElementById('heroBgPaths');
+  if (!svg) return;
+  var NS = 'http://www.w3.org/2000/svg';
+
+  /* Path formula matches the reference component exactly.
+     position=1  → fan sweeping lower-right
+     position=-1 → fan sweeping mirrored, creating X pattern */
+  for (var pos = 0; pos < 2; pos++) {
+    var p = pos === 0 ? 1 : -1;
+    for (var i = 0; i < 36; i++) {
+      var x0  = -(380 - i*5*p);
+      var y0  = -(189 + i*6);
+      var cx1 = -(380 - i*5*p);
+      var cy1 = -(189 + i*6);
+      var cx2 = -(312 - i*5*p);
+      var cy2 =  (216 - i*6);
+      var x1  =  (152 - i*5*p);
+      var y1  =  (343 - i*6);
+      var cx3 =  (616 - i*5*p);
+      var cy3 =  (470 - i*6);
+      var x2  =  (684 - i*5*p);
+      var y2  =  (875 - i*6);
+      var d   = 'M'+x0+' '+y0
+              + ' C'+cx1+' '+cy1+' '+cx2+' '+cy2+' '+x1+' '+y1
+              + ' C'+cx3+' '+cy3+' '+x2+' '+y2+' '+x2+' '+y2;
+
+      var el  = document.createElementNS(NS, 'path');
+      el.setAttribute('d', d);
+      el.setAttribute('fill', 'none');
+      el.setAttribute('pathLength', '1');
+
+      /* Taupe for pos=0, warm brown for pos=1 — both on-theme */
+      var opacity = pos === 0
+        ? (0.04 + i * 0.0028).toFixed(4)   /* taupe: 0.04–0.14 */
+        : (0.022 + i * 0.0018).toFixed(4); /* brown: 0.022–0.085 */
+      var color = pos === 0 ? '160,124,91' : '120,90,60';
+      var width = (0.35 + i * 0.018).toFixed(3);
+
+      el.setAttribute('stroke', 'rgba('+color+','+opacity+')');
+      el.setAttribute('stroke-width', width);
+      el.setAttribute('stroke-dasharray', '0.32 0.68');
+
+      /* Stagger start phase with negative delay */
+      var dur   = (18 + Math.random() * 14).toFixed(1) + 's';
+      var delay = (-Math.random() * 30).toFixed(2) + 's';
+      el.style.animation = 'bgPathTrav ' + dur + ' ' + delay + ' linear infinite';
+
+      svg.appendChild(el);
+    }
+  }
+})();
+
+/* ─────────────────────────────────────────────────────
+   CLICK RIPPLE
+───────────────────────────────────────────────────── */
+document.addEventListener('click', function(e) {
+  if (isTouch) return; /* skip on touch — no value and wastes DOM */
+  for (var i = 0; i < 2; i++) {
+    var r = document.createElement('div');
+    r.className = 'click-ripple' + (i ? ' click-ripple-2' : '');
+    r.style.left = e.clientX + 'px';
+    r.style.top  = e.clientY + 'px';
+    document.body.appendChild(r);
+    r.addEventListener('animationend', function() { this.remove(); });
+  }
+});
+
+/* ─────────────────────────────────────────────────────
+   CUSTOM CURSOR
+───────────────────────────────────────────────────── */
+var isTouch = window.matchMedia('(hover:none)').matches;
+
+/* ─────────────────────────────────────────────────────
+   HERO WRITING ANIMATION
+   Easing: very slow start (pen loading on nib),
+   then powerful quadratic acceleration that sweeps fast.
+───────────────────────────────────────────────────── */
+var HERO_MS = 860;
+
+function wEase(t) {
+  /* 0–7%: pen loading — almost no movement (covers ~0.5% of reveal)
+     7–100%: power-2 ease-in — starts slow then becomes an explosive sweep */
+  var HOLD = 0.07;
+  if (t < HOLD) {
+    var k = t / HOLD;
+    return k * k * 0.005;
+  }
+  var r = (t - HOLD) / (1.0 - HOLD);
+  return 0.005 + Math.pow(r, 1.9) * 0.995;
+}
+
+var heroRaf, heroLived = false, heroAnim = false;
+
+function resetHero() {
+  var th=document.getElementById('heroThrive'),ul=document.getElementById('heroUline'),
+      sb=document.getElementById('heroSub'),tg=document.getElementById('heroTagline'),
+      ct=document.getElementById('heroCta'),lc=document.getElementById('heroLoc'),
+      sc=document.getElementById('heroScroll'),pn=document.getElementById('heroPen');
+  if(th){th.style.transition='none';th.style.clipPath='polygon(0 0,0 0,0 100%,0 100%)';}
+  if(ul){var len=ul.getTotalLength();ul.style.transition='none';ul.style.strokeDasharray=String(len);ul.style.strokeDashoffset=String(len);}
+  [sb,tg,ct].forEach(function(el){if(!el)return;el.style.transition='none';el.style.opacity='0';el.style.transform='translateY(10px)';});
+  if(lc){lc.style.transition='none';lc.style.opacity='0';}
+  if(sc){sc.style.transition='none';sc.style.opacity='0';}
+  if(pn){pn.style.opacity='0';}
+}
+
+function runHero() {
+  if (heroAnim) return; heroAnim = true;
+  var wrap=document.getElementById('heroWrap'),th=document.getElementById('heroThrive'),
+      pn=document.getElementById('heroPen'),ul=document.getElementById('heroUline'),
+      sb=document.getElementById('heroSub'),tg=document.getElementById('heroTagline'),
+      ct=document.getElementById('heroCta'),lc=document.getElementById('heroLoc'),sc=document.getElementById('heroScroll');
+  if (!th||!wrap){heroAnim=false;return;}
+  if(ul){var ulen=ul.getTotalLength();ul.style.strokeDasharray=String(ulen);ul.style.strokeDashoffset=String(ulen);}
+  function fi(el,d,dur){if(!el)return;setTimeout(function(){el.style.transition='opacity '+dur+'s ease,transform '+dur+'s ease';el.style.opacity='1';el.style.transform='none';},d);}
+  var t0=null; if(heroRaf)cancelAnimationFrame(heroRaf);
+  function tick(ts){
+    if(!t0)t0=ts;
+    var t=Math.min((ts-t0)/HERO_MS,1),p=wEase(t),rv=(p*100).toFixed(3)+'%';
+    th.style.clipPath='polygon(0 0,'+rv+' 0,'+rv+' 100%,0 100%)';
+    if(pn&&wrap){var ww=wrap.getBoundingClientRect().width,px=(p)*ww;pn.style.left=Math.max(0,px-1)+'px';pn.style.opacity=String(t<.04?(t/.04)*.65:t>.94?((1-t)/.06)*.65:.65);}
+    if(t<1){heroRaf=requestAnimationFrame(tick);}
+    else{
+      heroAnim=false;th.style.clipPath='none';if(pn)pn.style.opacity='0';
+      setTimeout(function(){if(ul){ul.style.transition='stroke-dashoffset .65s cubic-bezier(.25,.46,.45,.94)';ul.style.strokeDashoffset='0';}},50);
+      fi(sb,240,.5);fi(tg,540,.5);fi(ct,820,.5);
+      if(lc)setTimeout(function(){lc.style.transition='opacity .4s ease';lc.style.opacity='1';},1050);
+      if(sc)setTimeout(function(){sc.style.transition='opacity .6s ease';sc.style.opacity='1';},1280);
+    }
+  }
+  setTimeout(function(){heroRaf=requestAnimationFrame(tick);},100);
+}
+
+function initHero() {
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches){
+    var th=document.getElementById('heroThrive'),ul=document.getElementById('heroUline');
+    ['heroSub','heroTagline','heroCta','heroLoc','heroScroll'].forEach(function(id){var el=document.getElementById(id);if(el){el.style.opacity='1';el.style.transform='none';}});
+    if(th)th.style.clipPath='none'; if(ul)ul.style.strokeDashoffset='0'; return;
+  }
+  resetHero(); runHero();
+}
+
+/* Re-trigger hero animation each time section re-enters viewport */
+var heroSec = document.getElementById('home');
+if(heroSec){
+  new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting){heroLived=true;}
+      else if(heroLived&&!heroAnim){heroLived=false;resetHero();setTimeout(runHero,200);}
+    });
+  },{threshold:.25}).observe(heroSec);
+}
+
+if(document.fonts&&document.fonts.ready){document.fonts.ready.then(initHero);}
+else{window.addEventListener('load',initHero);}
+
+/* ─────────────────────────────────────────────────────
+   CAROUSEL
+   Auto-advances always (no hover-pause).
+   Only ticks when section is intersecting viewport.
+───────────────────────────────────────────────────── */
+(function() {
+  var items=Array.from(document.querySelectorAll('.carousel__item'));
+  var dots =Array.from(document.querySelectorAll('.carousel__dot'));
+  if(!items.length)return;
+  var total=items.length, cur=0, timer=null, visible=false;
+  /* Responsive offset: on mobile show ~20% of adjacent card as a peek cue */
+  var OFFSET = window.innerWidth < 700 ? Math.round(window.innerWidth * 0.66) : 390;
+  window.addEventListener('resize', function(){
+    OFFSET = window.innerWidth < 700 ? Math.round(window.innerWidth * 0.66) : 390;
+    upd();
+  }, {passive:true});
+
+  function upd(){
+    items.forEach(function(item,i){
+      var off=((i-cur+total)%total);if(off>Math.floor(total/2))off-=total;
+      var isC=off===0,isA=Math.abs(off)===1,isV=Math.abs(off)<=2;
+      item.style.transform='translateX('+(off*OFFSET)+'px) scale('+(isC?1:isA?.84:.68)+') rotateY('+(off*-10)+'deg)';
+      item.style.opacity=String(isC?1:isA?.5:.18);
+      item.style.filter=(!isTouch&&!isC)?isA?'blur(3px)':'blur(6px)':'none';
+      item.style.zIndex=isC?'10':isA?'5':'1';
+      item.style.pointerEvents=isC?'auto':'none';
+      item.style.visibility=isV?'visible':'hidden';
+    });
+    dots.forEach(function(d,i){d.classList.toggle('active',i===cur);});
+  }
+
+  function go(d){cur=(cur+d+total)%total;upd();}
+
+  function startAuto(){if(!timer)timer=setInterval(function(){if(visible)go(1);},4500);}
+  function stopAuto(){clearInterval(timer);timer=null;}
+
+  /* Only advance while carousel section is visible */
+  var svc=document.getElementById('services');
+  if(svc){
+    new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        visible=e.isIntersecting;
+        if(visible)startAuto(); else stopAuto();
+      });
+    },{threshold:.2}).observe(svc);
+  } else { startAuto(); }
+
+  document.getElementById('carouselPrev').addEventListener('click',function(){go(-1);});
+  document.getElementById('carouselNext').addEventListener('click',function(){go(1); });
+  dots.forEach(function(d,i){d.addEventListener('click',function(){cur=i;upd();});});
+  items.forEach(function(item,i){
+    item.addEventListener('click',function(){
+      var o=((i-cur+total)%total);if(o>Math.floor(total/2))o-=total;
+      if(o!==0){cur=i;upd();}
+      else if(isTouch){
+        /* On touch: tap the centre card to open/close its info overlay */
+        var reveal=item.querySelector('.carousel__reveal');
+        if(reveal) reveal.classList.toggle('is-open');
+      }
+    });
+  });
+
+  /* Touch swipe */
+  var track=document.getElementById('carouselTrack'), tx=0;
+  if(track){
+    track.addEventListener('touchstart',function(e){tx=e.touches[0].clientX;},{passive:true});
+    track.addEventListener('touchend',  function(e){var d=tx-e.changedTouches[0].clientX;if(Math.abs(d)>45)go(d>0?1:-1);},{passive:true});
+  }
+
+  upd();
+})();
+
+/* ─────────────────────────────────────────────────────
+   SCROLL REVEAL (re-triggers on each viewport re-entry)
+───────────────────────────────────────────────────── */
+(function(){
+  var o=new IntersectionObserver(function(entries){entries.forEach(function(e){e.target.classList.toggle('in',e.isIntersecting);});},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){o.observe(el);});
+})();
+
+/* ─────────────────────────────────────────────────────
+   PRICE COUNTERS (re-triggers on re-entry)
+───────────────────────────────────────────────────── */
+function animateCount(el,to,dur){
+  var s=performance.now();
+  (function t(now){var p=Math.min((now-s)/dur,1);el.textContent=Math.round(to*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(t);})(s);
+}
+var pg=document.getElementById('priceGrid');
+if(pg){
+  new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting)e.target.querySelectorAll('.price-counter').forEach(function(el){animateCount(el,parseInt(el.dataset.to),900);});});
+  },{threshold:.3}).observe(pg);
+}
+
+/* ─────────────────────────────────────────────────────
+   3D CARD TILT
+───────────────────────────────────────────────────── */
+if(!isTouch){
+  document.querySelectorAll('.price-card').forEach(function(card){
+    var raf;
+    card.addEventListener('mousemove',function(e){cancelAnimationFrame(raf);raf=requestAnimationFrame(function(){var r=card.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;card.style.transform='perspective(800px) rotateX('+(y*-6)+'deg) rotateY('+(x*6)+'deg) translateY(-5px)';card.style.boxShadow='var(--shadow-lift)';});});
+    card.addEventListener('mouseleave',function(){cancelAnimationFrame(raf);card.style.transition='transform .55s cubic-bezier(.25,.46,.45,.94),box-shadow .4s';card.style.transform='';card.style.boxShadow='';});
+  });
+}
+
+/* ─────────────────────────────────────────────────────
+   MAGNETIC BUTTONS
+───────────────────────────────────────────────────── */
+if(!isTouch){
+  document.querySelectorAll('.mag').forEach(function(w){
+    var b=w.querySelector('.btn');if(!b)return;
+    w.addEventListener('mousemove',function(e){var r=w.getBoundingClientRect();b.style.transition='transform .1s linear';b.style.transform='translate('+((e.clientX-r.left-r.width/2)*.26)+'px,'+((e.clientY-r.top-r.height/2)*.26)+'px)';});
+    w.addEventListener('mouseleave',function(){b.style.transition='transform .5s cubic-bezier(.25,.46,.45,.94)';b.style.transform='';});
+  });
+}
+
+/* ─────────────────────────────────────────────────────
+   ORIGIN BUTTON RIPPLE
+───────────────────────────────────────────────────── */
+if(!isTouch){
+  document.querySelectorAll('.btn,.price-cta').forEach(function(btn){
+    var fill=document.createElement('span');fill.className='btn-fill';fill.setAttribute('aria-hidden','true');btn.appendChild(fill);
+    btn.addEventListener('pointerenter',function(e){
+      var r=btn.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;
+      var d=Math.ceil(2*Math.max(Math.hypot(x,y),Math.hypot(r.width-x,y),Math.hypot(x,r.height-y),Math.hypot(r.width-x,r.height-y)));
+      Object.assign(fill.style,{width:d+'px',height:d+'px',left:(x-d/2)+'px',top:(y-d/2)+'px',opacity:'1',transform:'scale(0)',transition:'none'});
+      requestAnimationFrame(function(){requestAnimationFrame(function(){fill.style.transition='transform .5s cubic-bezier(.16,1,.3,1)';fill.style.transform='scale(1)';});});
+    });
+    btn.addEventListener('pointerleave',function(){fill.style.transition='transform .5s cubic-bezier(.16,1,.3,1),opacity .35s ease .1s';fill.style.transform='scale(0)';fill.style.opacity='0';});
+  });
+}
+
+/* ─────────────────────────────────────────────────────
+   NAV
+───────────────────────────────────────────────────── */
+/* Throttle nav scroll with rAF to avoid layout thrashing */
+var _navScrollRaf=false;
+window.addEventListener('scroll',function(){
+  if(!_navScrollRaf){_navScrollRaf=true;requestAnimationFrame(function(){document.getElementById('nav').classList.toggle('is-scrolled',window.scrollY>50);_navScrollRaf=false;});}
+},{passive:true});
+var burger=document.getElementById('burger'),navLinks=document.getElementById('navLinks');
+burger.addEventListener('click',function(){var o=navLinks.classList.toggle('is-open');burger.classList.toggle('is-open',o);burger.setAttribute('aria-expanded',String(o));document.body.style.overflow=o?'hidden':'';});
+navLinks.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){navLinks.classList.remove('is-open');burger.classList.remove('is-open');burger.setAttribute('aria-expanded','false');document.body.style.overflow='';});});
+
+/* ─────────────────────────────────────────────────────
+   FAN GALLERY
+   12 pet photos in a rotating fan layout.
+   7 visible at once; arrow/dot navigation cycles them.
+   Hover spreads the fan — centre card lifts, others push.
+───────────────────────────────────────────────────── */
+(function() {
+  var IMGS = [
+    'assets/g02.png','assets/g03.png','assets/g04.png','assets/g05.png',
+    'assets/g06.png','assets/g07.png','assets/g08.png','assets/g09.png',
+    'assets/g10.png','assets/g11.png','assets/g12.png','assets/g13.png'
+  ];
+
+  /* Show fewer cards on smaller screens to avoid crowding and reduce cost */
+  function getMaxV(){ var w=window.innerWidth; if(w<480)return 3; if(w<700)return 5; return 7; }
+  var MAX_V = getMaxV(), HALF = Math.floor(MAX_V/2);
+  /* Fan slot positions: rotation°, scale, x-offset(rem), y-drop(rem), z-index */
+  var FAN = [
+    {rot:-21,scale:.7756,tx:-30,ty:.46,zi:1},
+    {rot:-14,scale:.8498,tx:-22,ty:.25,zi:2},
+    {rot: -7,scale:.9346,tx:-11,ty:.08,zi:3},
+    {rot:  0,scale:1.000,tx:  0,ty:  0,zi:10},
+    {rot:  7,scale:.9346,tx: 11,ty:.08,zi:3},
+    {rot: 14,scale:.8498,tx: 22,ty:.25,zi:2},
+    {rot: 21,scale:.7756,tx: 30,ty:.46,zi:1}
+  ];
+
+  function mult() {
+    var w = window.innerWidth;
+    if(w<380)return .26; if(w<480)return .32; if(w<600)return .44;
+    if(w<768)return .60; if(w<900)return .76; return 1;
+  }
+
+  var stage   = document.getElementById('fanStage');
+  var dotsEl  = document.getElementById('fanDots');
+  var prevBtn = document.getElementById('fanPrev');
+  var nextBtn = document.getElementById('fanNext');
+  if(!stage) return;
+
+  var total    = IMGS.length;
+  var needsPag = total > MAX_V;
+  var centerIdx = needsPag ? HALF : Math.floor(total/2);
+
+  /* Build card elements */
+  var cards = IMGS.map(function(src,i) {
+    var el  = document.createElement('div');
+    el.className = 'fan-card';
+    var img = document.createElement('img');
+    img.src = src; img.alt = 'Thrive Pet Care — photo '+(i+1); img.loading = 'lazy';
+    el.appendChild(img);
+    stage.appendChild(el);
+    return el;
+  });
+
+  /* Build dot indicators */
+  if(dotsEl) {
+    IMGS.forEach(function(_,i) {
+      var d = document.createElement('button');
+      d.className = 'fan-dot'+(i===centerIdx?' active':'');
+      d.setAttribute('aria-label','Photo '+(i+1));
+      d.addEventListener('click',function(){jumpTo(i);});
+      dotsEl.appendChild(d);
+    });
+  }
+
+  function slotPos(slot) {
+    if(!needsPag) {
+      /* Fewer images than MAX_V — generate positions dynamically */
+      var c=Math.floor(total/2), dist=slot-c;
+      var norm=c>0?dist/c:0, a=Math.abs(norm);
+      return {rot:norm*21,scale:1-.2244*a*a,tx:norm*30,ty:a*a*.46,zi:10-Math.abs(dist)};
+    }
+    /* When showing fewer than 7 slots, offset into the FAN array so we
+       always use the inner (closer-together) entries */
+    var fanOffset = Math.floor((7 - MAX_V) / 2); /* 0 for 7, 1 for 5, 2 for 3 */
+    return FAN[slot + fanOffset];
+  }
+
+  function visibleMap(ctr) {
+    var map = {};
+    if(!needsPag){ cards.forEach(function(_,i){map[i]=i;}); return map; }
+    for(var s=0;s<MAX_V;s++){
+      var idx = ((ctr+s-HALF)%total+total)%total;
+      map[idx] = s;
+    }
+    return map;
+  }
+
+  function applyPos(el, pos, m, extra) {
+    extra = extra || {};
+    var tx = (extra.tx !== undefined ? extra.tx : pos.tx) * m;
+    var ty = (extra.ty !== undefined ? extra.ty : pos.ty);
+    var rot   = extra.rot   !== undefined ? extra.rot   : pos.rot;
+    var scale = extra.scale !== undefined ? extra.scale : pos.scale;
+    var zi    = extra.zi    !== undefined ? extra.zi    : pos.zi;
+    el.style.transform = 'translateX('+tx.toFixed(3)+'rem) translateY('+ty.toFixed(3)+'rem) rotate('+rot+'deg) scale('+scale+')';
+    el.style.zIndex    = String(zi);
+  }
+
+  function render(ctr) {
+    var map = visibleMap(ctr);
+    var m   = mult();
+    cards.forEach(function(el,i){
+      var slot = map[i];
+      if(slot !== undefined){
+        el.style.opacity = '1';
+        el.style.pointerEvents = 'auto';
+        applyPos(el, slotPos(slot), m);
+      } else {
+        el.style.opacity = '0';
+        el.style.pointerEvents = 'none';
+        el.style.zIndex = '0';
+      }
+    });
+    if(dotsEl) Array.from(dotsEl.querySelectorAll('.fan-dot')).forEach(function(d,i){d.classList.toggle('active',i===ctr);});
+  }
+
+  function jumpTo(i){ centerIdx=i; render(centerIdx); }
+  function go(dir){ centerIdx=(centerIdx+dir+total)%total; render(centerIdx); }
+
+  /* Hover: lift hovered card, push neighbours outward (pointer devices only) */
+  if(!isTouch){
+    stage.addEventListener('mouseleave', function(){ render(centerIdx); });
+    cards.forEach(function(el,i){
+      el.addEventListener('mouseenter', function(){
+        var map = visibleMap(centerIdx);
+        var mySlot = map[i];
+        if(mySlot === undefined) return;
+        var m = mult();
+        Object.keys(map).forEach(function(idx){
+          idx = +idx;
+          var slot = map[idx];
+          var base = slotPos(slot);
+          var extra = {};
+          if(slot === mySlot){
+            extra.ty    = base.ty - .18;
+            extra.scale = base.scale * 1.06;
+            extra.zi    = 20;
+          } else {
+            var push = slot < mySlot ? -4 : 4;
+            extra.tx  = base.tx + push;
+            extra.rot = base.rot + (slot < mySlot ? -1.5 : 1.5);
+          }
+          applyPos(cards[idx], base, m, extra);
+        });
+      });
+    });
+  }
+
+  if(prevBtn) prevBtn.addEventListener('click', function(){go(-1);});
+  if(nextBtn) nextBtn.addEventListener('click', function(){go(1);});
+
+  /* On resize: recompute MAX_V in case orientation changed */
+  var resizeRaf;
+  window.addEventListener('resize', function(){
+    cancelAnimationFrame(resizeRaf);
+    resizeRaf = requestAnimationFrame(function(){
+      var newMax = getMaxV();
+      if(newMax !== MAX_V){
+        MAX_V = newMax; HALF = Math.floor(MAX_V/2);
+        needsPag = total > MAX_V;
+      }
+      render(centerIdx);
+    });
+  });
+
+  /* Initial entrance: cards fly up from below */
+  cards.forEach(function(el){
+    el.style.transition = 'none';
+    el.style.transform  = 'translateY(4rem) scale(.85)';
+  });
+  setTimeout(function(){
+    cards.forEach(function(el){ el.style.transition = 'transform .55s cubic-bezier(.16,1,.3,1),opacity .4s ease,box-shadow .3s'; });
+    render(centerIdx);
+  }, 120);
+})();
+
+/* ─────────────────────────────────────────────────────
+   WHATSAPP FORM
+───────────────────────────────────────────────────── */
+document.getElementById('contactForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  var name=document.getElementById('f-name').value.trim()||'a potential customer',phone=document.getElementById('f-phone').value.trim(),email=document.getElementById('f-email').value.trim(),service=document.getElementById('f-service').value||'your services',msg=document.getElementById('f-msg').value.trim();
+  var text='Hello! I found you via your website.\n\nName: '+name;if(phone)text+='\nPhone: '+phone;if(email)text+='\nEmail: '+email;text+='\n\nInterested in: '+service;if(msg)text+='\n\nAbout my pet: '+msg;
+  var btn=this.querySelector('[type=submit]');btn.textContent='Opening WhatsApp…';btn.disabled=true;
+  window.open('https://wa.me/447804033558?text='+encodeURIComponent(text),'_blank');
+  setTimeout(function(){btn.textContent='Send Enquiry via WhatsApp';btn.disabled=false;},2500);
+});
+</script>
+</body>
+</html>
