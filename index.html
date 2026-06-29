@@ -114,8 +114,9 @@
     #heroBgPaths {
       position:absolute;inset:0;width:100%;height:100%;
       pointer-events:none;z-index:0;overflow:hidden;
+      will-change:opacity;transform:translateZ(0);
     }
-    @keyframes bgPathTrav { from{stroke-dashoffset:0} to{stroke-dashoffset:-1} }
+    @keyframes bgPathTrav { 0%,100%{opacity:.65} 50%{opacity:1} }
 
     .hero__content { position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;padding:120px clamp(1.5rem,5vw,5rem) 100px;width:100%; }
 
@@ -164,7 +165,7 @@
     .wave svg { display:block;width:100%; }
 
     /* ── SERVICES ───────────────────────────────────── */
-    .services { background:var(--cream-mid);position:relative;overflow:hidden; }
+    .services { background:var(--cream-mid);position:relative;overflow:hidden;contain:layout style; }
     .deco-corner { position:absolute;pointer-events:none; }
     .deco-corner--tl { top:2rem;left:2rem; }
     .deco-corner--br { bottom:2rem;right:2rem;transform:rotate(180deg); }
@@ -186,7 +187,7 @@
 
     .carousel__item {
       position:absolute;width:380px;height:540px;
-      transition:transform .6s cubic-bezier(.25,.46,.45,.94),opacity .6s ease,filter .5s ease;
+      transition:transform .6s cubic-bezier(.25,.46,.45,.94),opacity .6s ease;
       transform-style:preserve-3d;cursor:pointer;will-change:transform;
     }
     @media(max-width:700px){ .carousel__item{width:260px;height:390px;} }
@@ -256,7 +257,7 @@
     .carousel__dot.active { opacity:1;width:20px;border-radius:3px; }
 
     /* ── PRICING ────────────────────────────────────── */
-    .pricing { background:var(--cream);position:relative; }
+    .pricing { background:var(--cream);position:relative;contain:layout style; }
     .price-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-bottom:2rem; }
     @media(max-width:1020px){ .price-grid{grid-template-columns:1fr 1fr;} }
     @media(max-width:580px)  { .price-grid{grid-template-columns:1fr;} }
@@ -313,16 +314,35 @@
     .about__pull-q em { font-style:normal;color:var(--taupe-dark); }
     .about__rule { display:block;width:60px;height:1px;background:linear-gradient(to right,transparent,var(--taupe),transparent);margin:0 auto 3.25rem; }
 
-    .about__inner { max-width:780px;margin:0 auto;text-align:center;position:relative;z-index:1; }
-    .about__inner h2 { margin-bottom:1.5rem; }
-    .about__inner p + p { margin-top:1.1rem; }
-    .about__deco { width:48px;height:1px;background:var(--taupe);margin:2.25rem auto;display:block; }
-    .about__more { display:inline-flex;align-items:center;gap:.5rem;font-size:.78rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--taupe-dark);margin-top:2.25rem;transition:gap .2s;cursor:pointer; }
+    /* Two-column body */
+    .about__body { display:grid;grid-template-columns:1fr 1.5fr;gap:4.5rem;align-items:start;position:relative;z-index:1; }
+    @media(max-width:960px){ .about__body{grid-template-columns:1fr;gap:2.5rem;} }
+
+    /* Credentials card */
+    .about__creds { padding:2.5rem 2rem;background:rgba(254,252,248,.93);border:1px solid var(--cream-dark);border-radius:var(--r-lg);position:sticky;top:7rem; }
+    @media(max-width:960px){ .about__creds{position:static;} }
+    .about__creds-name { font-family:var(--display);font-style:italic;font-size:clamp(2.8rem,5vw,4.2rem);font-weight:600;color:var(--brown);line-height:1;margin:.75rem 0 2rem; }
+    .about__cred-list { display:flex;flex-direction:column; }
+    .about__cred { border-top:1px solid var(--cream-dark);padding:1rem 0; }
+    .about__cred:last-child { border-bottom:1px solid var(--cream-dark); }
+    .about__cred-label { display:block;font-size:.63rem;letter-spacing:.13em;text-transform:uppercase;color:var(--taupe-dark);margin-bottom:.3rem; }
+    .about__cred-value { display:block;font-family:var(--display);font-size:1.05rem;font-weight:500;color:var(--brown);line-height:1.35; }
+    .about__cred-sub { display:block;font-size:.82rem;color:var(--brown-lt);margin-top:.1rem; }
+
+    /* Animated bio text */
+    .about__text { position:relative;z-index:1; }
+    .about__text p { font-size:1.05rem;line-height:1.88;color:var(--brown-mid); }
+    .about__text p + p { margin-top:1.5rem; }
+    @keyframes about-word { 0%{opacity:0;transform:translateY(12px) scale(0.96);} 100%{opacity:1;transform:none;} }
+    .w { display:inline-block;opacity:0; }
+    .about__text.words-go .w { animation:about-word .38s cubic-bezier(.16,1,.3,1) forwards; }
+
+    .about__more { display:inline-flex;align-items:center;gap:.5rem;font-size:.78rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--taupe-dark);margin-top:2.5rem;transition:gap .2s;cursor:pointer; }
     .about__more:hover { gap:.85rem; }
 
     .about__values { display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:720px;margin:4.5rem auto 0;position:relative;z-index:1; }
     @media(max-width:640px){ .about__values{grid-template-columns:1fr;max-width:280px;} }
-    .about__value { text-align:center;padding:2.25rem 1.5rem 2rem;border:1px solid var(--cream-dark);border-radius:var(--r-lg);background:rgba(254,252,248,.55);backdrop-filter:blur(4px);transition:transform .35s cubic-bezier(.25,.46,.45,.94),box-shadow .35s; }
+    .about__value { text-align:center;padding:2.25rem 1.5rem 2rem;border:1px solid var(--cream-dark);border-radius:var(--r-lg);background:rgba(254,252,248,.88);transition:transform .35s cubic-bezier(.25,.46,.45,.94),box-shadow .35s; }
     .about__value:hover { transform:translateY(-4px);box-shadow:var(--shadow-card); }
     .about__value-num   { font-family:var(--display);font-size:clamp(2.2rem,5vw,3.6rem);font-weight:600;color:var(--brown);line-height:1;margin-bottom:.55rem;letter-spacing:-.02em; }
     .about__value-label { font-size:.72rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--brown-lt);line-height:1.4; }
@@ -384,7 +404,7 @@
     @media(max-width:640px){ .footer__row{flex-direction:column;align-items:flex-start;} }
 
     /* ── GALLERY ────────────────────────────────────── */
-    .gallery { background:var(--cream);position:relative;overflow:hidden;padding-bottom:5rem; }
+    .gallery { background:var(--cream);position:relative;overflow:hidden;padding-bottom:5rem;contain:layout style; }
     .gallery .sec-head { text-align:center; }
     .gallery .sec-head p { margin:0 auto; }
 
@@ -780,15 +800,41 @@
     <div class="wrap">
       <div class="about__pull reveal"><p class="about__pull-q">"Every pet deserves to <em>thrive.</em>"</p></div>
       <span class="about__rule reveal" aria-hidden="true"></span>
-      <div class="about__inner">
-        <span class="eyebrow reveal">About Thrive Pet Care</span>
-        <h2 id="about-title" class="reveal">Meet Gabby,<br>your local pet carer</h2>
-        <span class="about__deco reveal" aria-hidden="true"></span>
-        <p class="reveal">Hi, my name is Gabby and I am a 20 year old student currently studying Animal Health and Welfare at Harper Adams University.</p>
-        <p class="reveal" style="transition-delay:.08s">I have several years of experience working with dogs, horses and other animals. This experience includes dog walking, pet sitting, stable work and dog grooming. I also own a cat and a dog myself — I am currently on my placement year working at a canine hydrotherapy and physiotherapy centre.</p>
-        <p class="reveal" style="transition-delay:.16s">My dream is to become a veterinary physiotherapist and help animals of all sizes. I am experienced with handling all types of animals and breeds including those who might be extremely energetic, nervous or reactive.</p>
-        <p class="reveal" style="transition-delay:.24s">The degree I am currently pursuing, along with my hands-on experience, provides me with the knowledge and skills to meet the needs of every animal.</p>
-        <a href="#contact" class="about__more reveal" style="transition-delay:.32s">Get in touch to find out more <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l5 4-5 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <div class="about__body">
+        <!-- Left: credentials card -->
+        <div class="about__creds reveal">
+          <span class="eyebrow">About</span>
+          <div class="about__creds-name" id="about-title">Gabby</div>
+          <div class="about__cred-list">
+            <div class="about__cred">
+              <span class="about__cred-label">Currently Studying</span>
+              <span class="about__cred-value">Animal Health &amp; Welfare</span>
+              <span class="about__cred-sub">Harper Adams University</span>
+            </div>
+            <div class="about__cred">
+              <span class="about__cred-label">Placement Year</span>
+              <span class="about__cred-value">Canine Hydrotherapy</span>
+              <span class="about__cred-sub">&amp; Physiotherapy Centre</span>
+            </div>
+            <div class="about__cred">
+              <span class="about__cred-label">Aspiring</span>
+              <span class="about__cred-value">Veterinary Physiotherapist</span>
+            </div>
+            <div class="about__cred">
+              <span class="about__cred-label">Experience</span>
+              <span class="about__cred-value">Dog Walking · Pet Sitting</span>
+              <span class="about__cred-sub">Stable Work · Grooming</span>
+            </div>
+          </div>
+          <a href="#contact" class="about__more" style="margin-top:2rem;display:inline-flex">Get in touch to find out more <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l5 4-5 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <!-- Right: animated bio text -->
+        <div class="about__text" id="aboutText">
+          <p>Hi, my name is Gabby and I am a 20 year old student currently studying Animal Health and Welfare at Harper Adams University.</p>
+          <p>I have several years of experience working with dogs, horses and other animals. This experience includes dog walking, pet sitting, stable work and dog grooming. I also own a cat and a dog myself — I am currently on my placement year working at a canine hydrotherapy and physiotherapy centre.</p>
+          <p>My dream is to become a veterinary physiotherapist and help animals of all sizes. I am experienced with handling all types of animals and breeds including those who might be extremely energetic, nervous or reactive.</p>
+          <p>The degree I am currently pursuing, along with my hands-on experience, provides me with the knowledge and skills to meet the needs of every animal.</p>
+        </div>
       </div>
       <div class="about__values">
         <div class="about__value reveal"><div class="about__value-num">1:1</div><div class="about__value-label">Solo walks,<br>every time</div></div>
@@ -1108,7 +1154,7 @@ else{window.addEventListener('load',initHero);}
       var isC=off===0,isA=Math.abs(off)===1,isV=Math.abs(off)<=2;
       item.style.transform='translateX('+(off*OFFSET)+'px) scale('+(isC?1:isA?.84:.68)+') rotateY('+(off*-10)+'deg)';
       item.style.opacity=String(isC?1:isA?.5:.18);
-      item.style.filter=(!isTouch&&!isC)?isA?'blur(3px)':'blur(6px)':'none';
+      item.style.filter='none';
       item.style.zIndex=isC?'10':isA?'5':'1';
       item.style.pointerEvents=isC?'auto':'none';
       item.style.visibility=isV?'visible':'hidden';
@@ -1155,6 +1201,28 @@ else{window.addEventListener('load',initHero);}
   }
 
   upd();
+})();
+
+/* ─────────────────────────────────────────────────────
+   ABOUT — WORD-BY-WORD REVEAL
+───────────────────────────────────────────────────── */
+(function(){
+  var textEl=document.getElementById('aboutText');
+  if(!textEl)return;
+  var offset=0;
+  textEl.querySelectorAll('p').forEach(function(p){
+    var words=p.textContent.trim().split(/\s+/);
+    p.innerHTML=words.map(function(w,i){
+      return '<span class="w" style="animation-delay:'+(offset+i*24)+'ms">'+w+'</span>';
+    }).join(' ');
+    offset+=words.length*24+100;
+  });
+  var done=false;
+  new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting&&!done){done=true;textEl.classList.add('words-go');}
+    });
+  },{threshold:0.08,rootMargin:'0px 0px -50px 0px'}).observe(textEl);
 })();
 
 /* ─────────────────────────────────────────────────────
