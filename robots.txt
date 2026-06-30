@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://thrivepetcare.co.uk/sitemap.xml
