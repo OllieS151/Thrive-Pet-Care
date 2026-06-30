@@ -183,6 +183,9 @@
       position:relative;overflow:hidden;
       background: radial-gradient(ellipse 90% 75% at 50% 48%, rgba(201,185,154,.1) 0%, transparent 70%), var(--cream);
     }
+    @media(max-width:600px){
+      .hero { min-height:100dvh; }
+    }
 
     /* Background paths SVG — covers full hero, always animating */
     #heroBgPaths {
@@ -553,18 +556,16 @@
     /* Hero: less top padding on mobile, hide pen (too small to read) */
     @media(max-width:600px){ .hero__pen{display:none;} }
 
-    /* Carousel: on touch devices, always partially show reveal overlay
-       so users know there's content — tap the centre card to open fully */
+    /* Carousel: on touch devices reveal hidden until tap */
     @media(hover:none){
       .carousel__reveal{
-        transform:translateY(72%)!important;opacity:1!important;
+        transform:translateY(110%)!important;opacity:0!important;
         backdrop-filter:none;-webkit-backdrop-filter:none;
-        border-radius:0 0 var(--r-lg) var(--r-lg);
         transition:transform .38s cubic-bezier(.16,1,.3,1),opacity .25s;
       }
-      .carousel__reveal.is-open{ transform:translateY(0)!important; }
-      .carousel__reveal-desc{ display:none; }
-      .carousel__reveal-tags{ margin-bottom:.5rem; }
+      .carousel__reveal.is-open{
+        transform:translateY(0)!important;opacity:1!important;
+      }
     }
 
     /* Carousel: swipe-only on mobile — arrows hidden */
@@ -1565,6 +1566,14 @@ navLinks.querySelectorAll('a').forEach(function(a){a.addEventListener('click',fu
 
   if(prevBtn) prevBtn.addEventListener('click', function(){go(-1);});
   if(nextBtn) nextBtn.addEventListener('click', function(){go(1);});
+
+  /* Touch swipe for fan gallery */
+  var fanTx = 0;
+  stage.addEventListener('touchstart', function(e){ fanTx = e.touches[0].clientX; }, { passive:true });
+  stage.addEventListener('touchend', function(e){
+    var d = fanTx - e.changedTouches[0].clientX;
+    if(Math.abs(d) > 40) go(d > 0 ? 1 : -1);
+  }, { passive:true });
 
   /* On resize: recompute MAX_V in case orientation changed */
   var resizeRaf;
