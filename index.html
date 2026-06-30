@@ -1529,16 +1529,20 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
   btn.textContent = 'Sending…';
   btn.disabled = true;
 
+  var service = document.getElementById('f-service').value || 'General';
   var data = {
-    name:    document.getElementById('f-name').value.trim(),
-    phone:   document.getElementById('f-phone').value.trim(),
-    email:   document.getElementById('f-email').value.trim(),
-    service: document.getElementById('f-service').value || 'Not specified',
-    message: document.getElementById('f-msg').value.trim(),
-    _subject: 'Website Enquiry — ' + (document.getElementById('f-service').value || 'General')
+    access_key: '5b12b1a5-6cc8-4361-a477-207c119454fe',
+    subject:    'Website Enquiry — ' + service,
+    from_name:  'Thrive Pet Care Website',
+    name:       document.getElementById('f-name').value.trim(),
+    phone:      document.getElementById('f-phone').value.trim(),
+    email:      document.getElementById('f-email').value.trim(),
+    service:    service,
+    message:    document.getElementById('f-msg').value.trim(),
+    _template:  'table'
   };
 
-  fetch('https://formspree.io/f/xdarlrjy', {
+  fetch('https://api.web3forms.com/submit', {
     method:  'POST',
     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
     body:    JSON.stringify(data)
