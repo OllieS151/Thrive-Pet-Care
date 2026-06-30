@@ -484,7 +484,7 @@
     .gallery .sec-head p { margin:0 auto; }
 
     .fan-stage {
-      position:relative;height:500px;
+      position:relative;height:580px;
       display:flex;align-items:center;justify-content:center;
       margin:3rem 0 1.5rem;overflow:visible;
     }
@@ -494,7 +494,7 @@
 
     .fan-card {
       position:absolute;
-      width:200px;height:290px;
+      width:240px;height:340px;
       border-radius:var(--r-md);overflow:hidden;
       box-shadow:0 14px 48px rgba(58,42,26,.22),0 2px 8px rgba(58,42,26,.10);
       will-change:transform;opacity:0;
@@ -1388,13 +1388,13 @@ navLinks.querySelectorAll('a').forEach(function(a){a.addEventListener('click',fu
   var MAX_V = getMaxV(), HALF = Math.floor(MAX_V/2);
   /* Fan slot positions: rotation°, scale, x-offset(rem), y-drop(rem), z-index */
   var FAN = [
-    {rot:-21,scale:.7756,tx:-30,ty:.46,zi:1},
-    {rot:-14,scale:.8498,tx:-22,ty:.25,zi:2},
-    {rot: -7,scale:.9346,tx:-11,ty:.08,zi:3},
+    {rot:-21,scale:.7756,tx:-42,ty:.46,zi:1},
+    {rot:-14,scale:.8498,tx:-30,ty:.25,zi:2},
+    {rot: -7,scale:.9346,tx:-15,ty:.08,zi:3},
     {rot:  0,scale:1.000,tx:  0,ty:  0,zi:10},
-    {rot:  7,scale:.9346,tx: 11,ty:.08,zi:3},
-    {rot: 14,scale:.8498,tx: 22,ty:.25,zi:2},
-    {rot: 21,scale:.7756,tx: 30,ty:.46,zi:1}
+    {rot:  7,scale:.9346,tx: 15,ty:.08,zi:3},
+    {rot: 14,scale:.8498,tx: 30,ty:.25,zi:2},
+    {rot: 21,scale:.7756,tx: 42,ty:.46,zi:1}
   ];
 
   function mult() {
