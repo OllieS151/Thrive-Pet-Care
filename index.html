@@ -1518,32 +1518,64 @@ navLinks.querySelectorAll('a').forEach(function(a){a.addEventListener('click',fu
 })();
 
 /* ─────────────────────────────────────────────────────
-   EMAIL ENQUIRY FORM
+   EMAIL ENQUIRY FORM — Formspree
 ───────────────────────────────────────────────────── */
-document.getElementById('contactForm').addEventListener('submit',function(e){
+document.getElementById('contactForm').addEventListener('submit', function(e) {
   e.preventDefault();
-  var name    = document.getElementById('f-name').value.trim()    || 'Website visitor';
-  var phone   = document.getElementById('f-phone').value.trim();
-  var email   = document.getElementById('f-email').value.trim();
-  var service = document.getElementById('f-service').value        || 'Not specified';
-  var msg     = document.getElementById('f-msg').value.trim();
+  var form = this;
+  var btn  = form.querySelector('[type=submit]');
+  var card = form.closest('.form-card');
 
-  var subject = 'Website Enquiry — ' + service;
-  var body    = 'Hi Gabby,\n\nYou have a new enquiry from your website.\n\n'
-              + 'Name: '    + name    + '\n'
-              + (phone ? 'Phone: ' + phone + '\n' : '')
-              + (email ? 'Reply to: ' + email + '\n' : '')
-              + '\nService interested in: ' + service
-              + (msg ? '\n\nAbout their pet:\n' + msg : '')
-              + '\n\n---\nSent via thrivepetcare.co.uk';
-
-  var btn = this.querySelector('[type=submit]');
-  btn.textContent = 'Opening email…';
+  btn.textContent = 'Sending…';
   btn.disabled = true;
-  window.location.href = 'mailto:thrivepetcare@hotmail.com'
-    + '?subject=' + encodeURIComponent(subject)
-    + '&body='    + encodeURIComponent(body);
-  setTimeout(function(){ btn.textContent = 'Send Enquiry'; btn.disabled = false; }, 3000);
+
+  var data = {
+    name:    document.getElementById('f-name').value.trim(),
+    phone:   document.getElementById('f-phone').value.trim(),
+    email:   document.getElementById('f-email').value.trim(),
+    service: document.getElementById('f-service').value || 'Not specified',
+    message: document.getElementById('f-msg').value.trim(),
+    _subject: 'Website Enquiry — ' + (document.getElementById('f-service').value || 'General')
+  };
+
+  fetch('https://formspree.io/f/xdarlrjy', {
+    method:  'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body:    JSON.stringify(data)
+  })
+  .then(function(res) { return res.json().then(function(j){ return {ok: res.ok, body: j}; }); })
+  .then(function(result) {
+    if (result.ok) {
+      card.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:260px;gap:1.25rem;text-align:center;">'
+        + '<svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><circle cx="26" cy="26" r="25" stroke="rgba(201,185,154,.5)" stroke-width="1.5"/><path d="M15 26.5l8 8 14-16" stroke="var(--taupe)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+        + '<p style="font-family:var(--display);font-size:1.45rem;font-weight:500;color:var(--cream);margin:0;line-height:1.2;">Enquiry sent!</p>'
+        + '<p style="font-size:.92rem;color:rgba(247,242,234,.6);margin:0;line-height:1.7;max-width:300px;">Thanks — we\'ll be in touch shortly to discuss your pet\'s care.</p>'
+        + '</div>';
+    } else {
+      btn.textContent = 'Try again';
+      btn.disabled = false;
+      var err = document.getElementById('form-error');
+      if (!err) {
+        err = document.createElement('p');
+        err.id = 'form-error';
+        err.style.cssText = 'color:rgba(240,100,100,.8);font-size:.82rem;margin-top:.75rem;text-align:center;';
+        form.appendChild(err);
+      }
+      err.textContent = result.body.error || 'Something went wrong — please try again or email us directly.';
+    }
+  })
+  .catch(function() {
+    btn.textContent = 'Try again';
+    btn.disabled = false;
+    var err = document.getElementById('form-error');
+    if (!err) {
+      err = document.createElement('p');
+      err.id = 'form-error';
+      err.style.cssText = 'color:rgba(240,100,100,.8);font-size:.82rem;margin-top:.75rem;text-align:center;';
+      form.appendChild(err);
+    }
+    err.textContent = 'Could not connect — please check your internet and try again.';
+  });
 });
 </script>
 </body>
