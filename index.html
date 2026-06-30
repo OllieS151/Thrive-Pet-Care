@@ -1530,16 +1530,58 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
   btn.disabled = true;
 
   var service = document.getElementById('f-service').value || 'General';
+  var name    = document.getElementById('f-name').value.trim();
+  var phone   = document.getElementById('f-phone').value.trim();
+  var email   = document.getElementById('f-email').value.trim();
+  var message = document.getElementById('f-msg').value.trim();
+
+  var html = '<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body style="margin:0;padding:0;background:#f0ebe3;font-family:Georgia,serif;">'
+    + '<table width="100%" cellpadding="0" cellspacing="0" style="background:#f0ebe3;padding:40px 0;">'
+    + '<tr><td align="center">'
+    + '<table width="560" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(58,42,26,.10);">'
+
+    /* Header */
+    + '<tr><td style="background:#3A2A1A;padding:36px 40px 28px;text-align:center;">'
+    + '<p style="margin:0 0 4px;font-family:Georgia,serif;font-size:22px;font-weight:600;color:#F7F2EA;letter-spacing:.02em;">Thrive Pet Care</p>'
+    + '<p style="margin:0;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#C9B99A;">New Website Enquiry</p>'
+    + '</td></tr>'
+
+    /* Service badge */
+    + '<tr><td style="background:#f7f2ea;padding:18px 40px;border-bottom:1px solid #e8e0d4;">'
+    + '<p style="margin:0;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#A07C5B;font-family:Arial,sans-serif;">Service enquired about</p>'
+    + '<p style="margin:6px 0 0;font-family:Georgia,serif;font-size:20px;font-weight:600;color:#3A2A1A;">' + service + '</p>'
+    + '</td></tr>'
+
+    /* Details */
+    + '<tr><td style="padding:32px 40px 8px;">'
+    + '<table width="100%" cellpadding="0" cellspacing="0">'
+    + '<tr><td style="padding:10px 0;border-bottom:1px solid #f0ebe3;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#A07C5B;font-family:Arial,sans-serif;width:120px;vertical-align:top;padding-right:16px;">Name</td>'
+    + '<td style="padding:10px 0;border-bottom:1px solid #f0ebe3;font-size:15px;color:#3A2A1A;font-family:Georgia,serif;">' + (name || '—') + '</td></tr>'
+    + (phone ? '<tr><td style="padding:10px 0;border-bottom:1px solid #f0ebe3;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#A07C5B;font-family:Arial,sans-serif;vertical-align:top;padding-right:16px;">Phone</td>'
+    + '<td style="padding:10px 0;border-bottom:1px solid #f0ebe3;font-size:15px;color:#3A2A1A;font-family:Georgia,serif;">' + phone + '</td></tr>' : '')
+    + (email ? '<tr><td style="padding:10px 0;border-bottom:1px solid #f0ebe3;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#A07C5B;font-family:Arial,sans-serif;vertical-align:top;padding-right:16px;">Email</td>'
+    + '<td style="padding:10px 0;border-bottom:1px solid #f0ebe3;font-size:15px;color:#3A2A1A;font-family:Georgia,serif;"><a href="mailto:' + email + '" style="color:#7A5C3E;">' + email + '</a></td></tr>' : '')
+    + (message ? '<tr><td style="padding:10px 0;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#A07C5B;font-family:Arial,sans-serif;vertical-align:top;padding-right:16px;padding-top:16px;">About their pet</td>'
+    + '<td style="padding:10px 0;padding-top:16px;font-size:15px;color:#3A2A1A;font-family:Georgia,serif;line-height:1.7;">' + message.replace(/\n/g,'<br>') + '</td></tr>' : '')
+    + '</table></td></tr>'
+
+    /* Reply CTA */
+    + (email ? '<tr><td style="padding:24px 40px 32px;text-align:center;">'
+    + '<a href="mailto:' + email + '" style="display:inline-block;background:#3A2A1A;color:#F7F2EA;font-family:Arial,sans-serif;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;padding:14px 32px;border-radius:6px;">Reply to ' + name.split(' ')[0] + '</a>'
+    + '</td></tr>' : '')
+
+    /* Footer */
+    + '<tr><td style="background:#f7f2ea;padding:20px 40px;text-align:center;border-top:1px solid #e8e0d4;">'
+    + '<p style="margin:0;font-size:11px;color:#A07C5B;font-family:Arial,sans-serif;letter-spacing:.06em;">Sent via thrive-pet-care.vercel.app</p>'
+    + '</td></tr>'
+
+    + '</table></td></tr></table></body></html>';
+
   var data = {
     access_key: '5b12b1a5-6cc8-4361-a477-207c119454fe',
     subject:    'Website Enquiry — ' + service,
     from_name:  'Thrive Pet Care Website',
-    name:       document.getElementById('f-name').value.trim(),
-    phone:      document.getElementById('f-phone').value.trim(),
-    email:      document.getElementById('f-email').value.trim(),
-    service:    service,
-    message:    document.getElementById('f-msg').value.trim(),
-    _template:  'table'
+    html:       html
   };
 
   fetch('https://api.web3forms.com/submit', {
