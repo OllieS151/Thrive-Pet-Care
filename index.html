@@ -147,6 +147,14 @@
     .btn--dark:hover  { background:var(--brown-mid);box-shadow:0 4px 20px rgba(58,42,26,.2); }
     .btn--ghost { background:transparent;color:var(--brown);border:1.5px solid var(--taupe); }
     .btn--ghost:hover { border-color:var(--brown-mid);background:rgba(58,42,26,.04); }
+    /* On touch devices: skip hover state so first tap fires click directly.
+       Use :active for the colour flash instead — instant and reliable. */
+    @media(hover:none){
+      .btn--dark:hover  { background:var(--brown);box-shadow:none; }
+      .btn--ghost:hover { border-color:var(--taupe);background:transparent; }
+      .btn--dark:active  { background:var(--brown-mid);box-shadow:0 4px 20px rgba(58,42,26,.2); }
+      .btn--ghost:active { border-color:var(--brown-mid);background:rgba(58,42,26,.04); }
+    }
     .mag { display:inline-block; }
     .btn-fill { position:absolute;border-radius:50%;pointer-events:none;transform:scale(0);z-index:0; }
     .btn--dark  .btn-fill { background:rgba(255,255,255,.14); }
