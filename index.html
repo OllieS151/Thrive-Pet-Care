@@ -470,41 +470,9 @@
     .fg:focus-within label { color:var(--taupe); }
     .fg input,.fg select,.fg textarea { padding:.78rem 1rem;border:1.5px solid rgba(255,255,255,.1);border-radius:var(--r-sm);background:rgba(255,255,255,.07);font-family:var(--body);font-size:.93rem;color:var(--cream);transition:border-color .2s,box-shadow .2s,background .2s;appearance:none;-webkit-appearance:none;cursor:pointer; }
     .fg input::placeholder,.fg textarea::placeholder { color:rgba(247,242,234,.25); }
-    .fg input:focus,.fg select:focus,.fg textarea:focus { outline:none;border-color:rgba(201,185,154,.35);box-shadow:none;background:rgba(255,255,255,.11); }
-
-    /* Conic gradient travelling-light border */
-    @property --glow-angle { syntax:'<angle>';inherits:false;initial-value:0deg; }
-    @keyframes glow-spin     { to { --glow-angle:360deg; } }
-    @keyframes glow-spin-slow{ to { --glow-angle:360deg; } }
-
-    .field-wrap { position:relative;display:block;border-radius:var(--r-sm); }
-    .field-wrap::before {
-      content:'';position:absolute;inset:-1.5px;
-      border-radius:calc(var(--r-sm) + 1.5px);
-      padding:1.5px;
-      background:conic-gradient(
-        from var(--glow-angle) at 50% 50%,
-        rgba(201,185,154,0)   0deg,
-        rgba(160,124,91,.55) 55deg,
-        rgba(201,185,154,.95) 85deg,
-        rgba(254,252,248,.75) 100deg,
-        rgba(201,185,154,.95) 115deg,
-        rgba(160,124,91,.55) 145deg,
-        rgba(201,185,154,0)  200deg,
-        rgba(201,185,154,0)  360deg
-      );
-      -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
-      -webkit-mask-composite:xor;mask-composite:exclude;
-      opacity:0;transition:opacity .4s ease;
-    }
-    .field-wrap.is-active::before {
-      opacity:1;
-      animation:glow-spin 2s linear infinite;
-    }
-    .field-wrap.is-filled::before {
-      opacity:.55;
-      animation:glow-spin-slow 5s linear infinite;
-    }
+    .fg input:focus,.fg select:focus,.fg textarea:focus { outline:none;border-color:rgba(201,185,154,.8);box-shadow:0 0 0 5px rgba(201,185,154,.18),0 0 18px rgba(201,185,154,.12);background:rgba(255,255,255,.13); }
+    .fg input.is-filled,.fg select.is-filled,.fg textarea.is-filled { border-color:rgba(201,185,154,.5);box-shadow:0 0 0 4px rgba(201,185,154,.1),0 0 14px rgba(201,185,154,.09);background:rgba(255,255,255,.10);transition:border-color .4s ease,box-shadow .4s ease,background .4s ease; }
+    .fg input.is-filled:focus,.fg select.is-filled:focus,.fg textarea.is-filled:focus { border-color:rgba(201,185,154,.9);box-shadow:0 0 0 5px rgba(201,185,154,.2),0 0 20px rgba(201,185,154,.14);background:rgba(255,255,255,.14); }
     .fg textarea { min-height:110px;resize:vertical; }
     .fg select { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C9B99A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .9rem center;padding-right:2.5rem; }
     .fg select option { background:var(--brown);color:var(--cream); }
@@ -1645,25 +1613,14 @@ navLinks.querySelectorAll('a').forEach(function(a){a.addEventListener('click',fu
 })();
 
 /* ─────────────────────────────────────────────────────
-   CONTACT FORM — conic glow border
+   CONTACT FORM — filled field glow
 ───────────────────────────────────────────────────── */
 document.querySelectorAll('#contactForm input, #contactForm select, #contactForm textarea').forEach(function(el) {
-  var wrap = document.createElement('div');
-  wrap.className = 'field-wrap';
-  el.parentNode.insertBefore(wrap, el);
-  wrap.appendChild(el);
-
-  el.addEventListener('focus', function() {
-    wrap.classList.add('is-active');
-    wrap.classList.remove('is-filled');
-  });
-  el.addEventListener('blur', function() {
-    wrap.classList.remove('is-active');
-    if (el.value.trim() !== '') wrap.classList.add('is-filled');
-  });
-  el.addEventListener('change', function() {
-    if (document.activeElement !== el && el.value.trim() !== '') wrap.classList.add('is-filled');
-  });
+  function check() {
+    el.classList.toggle('is-filled', el.value.trim() !== '');
+  }
+  el.addEventListener('input', check);
+  el.addEventListener('change', check);
 });
 
 /* ─────────────────────────────────────────────────────
