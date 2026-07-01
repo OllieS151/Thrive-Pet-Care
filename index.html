@@ -1379,11 +1379,11 @@ navLinks.querySelectorAll('a').forEach(function(a){a.addEventListener('click',fu
 ───────────────────────────────────────────────────── */
 (function() {
   var IMGS = [
-    'assets/g02.png','assets/g03.png','assets/g04.png','assets/g05.png',
-    'assets/g06.png','assets/g07.png','assets/g08.png','assets/g09.png',
-    'assets/g10.png','assets/g11.png','assets/g12.png','assets/g13.png',
-    'assets/g14.png','assets/g15.png','assets/g16.png','assets/g17.png',
-    'assets/g18.png','assets/g19.png','assets/g20.png'
+    'assets/g02.webp','assets/g03.webp','assets/g04.webp','assets/g05.webp',
+    'assets/g06.webp','assets/g07.webp','assets/g08.webp','assets/g09.webp',
+    'assets/g10.webp','assets/g11.webp','assets/g12.webp','assets/g13.webp',
+    'assets/g14.webp','assets/g15.webp','assets/g16.webp','assets/g17.webp',
+    'assets/g18.webp','assets/g19.webp','assets/g20.webp'
   ];
 
   /* Show fewer cards on smaller screens to avoid crowding and reduce cost */
@@ -1391,13 +1391,13 @@ navLinks.querySelectorAll('a').forEach(function(a){a.addEventListener('click',fu
   var MAX_V = getMaxV(), HALF = Math.floor(MAX_V/2);
   /* Fan slot positions: rotation°, scale, x-offset(rem), y-drop(rem), z-index */
   var FAN = [
-    {rot:-21,scale:.7756,tx:-42,ty:.46,zi:1},
-    {rot:-14,scale:.8498,tx:-30,ty:.25,zi:2},
-    {rot: -7,scale:.9346,tx:-15,ty:.08,zi:3},
+    {rot:-21,scale:.7756,tx:-33,ty:.46,zi:1},
+    {rot:-14,scale:.8498,tx:-23,ty:.25,zi:2},
+    {rot: -7,scale:.9346,tx:-12,ty:.08,zi:3},
     {rot:  0,scale:1.000,tx:  0,ty:  0,zi:10},
-    {rot:  7,scale:.9346,tx: 15,ty:.08,zi:3},
-    {rot: 14,scale:.8498,tx: 30,ty:.25,zi:2},
-    {rot: 21,scale:.7756,tx: 42,ty:.46,zi:1}
+    {rot:  7,scale:.9346,tx: 12,ty:.08,zi:3},
+    {rot: 14,scale:.8498,tx: 23,ty:.25,zi:2},
+    {rot: 21,scale:.7756,tx: 33,ty:.46,zi:1}
   ];
 
   function mult() {
